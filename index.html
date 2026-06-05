@@ -4,15 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#0F6E56">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#005A96">
 <title>Avance de Obra</title>
 <style>
   :root {
-    --verde: #0072BC;
-    --verde-dark: #005A96;
-    --verde-light: #E6F2FB;
-    --verde-text: #003D6B;
-    --acento: #F5A800;
+    --azul: #0072BC;
+    --azul-dark: #005A96;
+    --azul-light: #E6F2FB;
+    --azul-text: #003D6B;
+    --dorado: #F5A800;
     --bg: #F5F5F3;
     --card: #FFFFFF;
     --text: #3D3D3D;
@@ -24,81 +25,78 @@
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-  /* NAV */
-  .nav { background: #005A96; padding: 0; position: sticky; top: 0; z-index: 100; border-bottom: 4px solid #F5A800; }
+  .nav { background: var(--azul-dark); padding: 0; position: sticky; top: 0; z-index: 100; border-bottom: 4px solid var(--dorado); }
   .nav-top { padding: 16px 16px 0; display: flex; align-items: center; justify-content: space-between; }
-  .nav-title { color: #fff; font-size: 17px; font-weight: 600; }
-  .nav-date { color: rgba(255,255,255,0.75); font-size: 13px; }
+  .nav-title { color: #fff; font-size: 15px; font-weight: 600; line-height: 1.3; }
+  .nav-date { color: rgba(255,255,255,0.75); font-size: 13px; flex-shrink: 0; margin-left: 8px; }
   .nav-tabs { display: flex; margin-top: 12px; }
   .nav-tab { flex: 1; padding: 11px 0; text-align: center; color: rgba(255,255,255,0.6); font-size: 13px; font-weight: 500; cursor: pointer; border-bottom: 2.5px solid transparent; transition: all 0.15s; }
   .nav-tab.active { color: #fff; border-bottom-color: #fff; }
 
-  /* PAGES */
   .page { display: none; padding: 16px; }
   .page.active { display: block; }
 
-  /* CARDS */
   .card { background: var(--card); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; border: 0.5px solid var(--border); }
-
-  /* FIELD */
   .field-label { font-size: 12px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
-  select, input[type=date] { width: 100%; font-size: 16px; padding: 14px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--card); color: var(--text); appearance: none; -webkit-appearance: none; }
-  select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B6B68' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; background-color: var(--card); }
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-  /* PARTIDA ACCORDION */
+  select, input[type=date] { width: 100%; font-size: 16px; padding: 14px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--card); color: var(--text); appearance: none; -webkit-appearance: none; }
+  select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237A7A7A' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; background-color: var(--card); }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+
   .partida { background: var(--card); border-radius: var(--radius); margin-bottom: 10px; border: 1px solid var(--border); overflow: hidden; }
   .partida-hdr { display: flex; align-items: center; padding: 16px; cursor: pointer; gap: 10px; }
   .partida-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
   .partida-name { font-size: 15px; font-weight: 600; color: var(--text); flex: 1; }
-  .partida-badge { font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 20px; display: none; }
-  .partida-badge.visible { display: inline-block; background: var(--verde-light); color: var(--verde-text); }
+  .partida-badge { font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 20px; display: none; background: var(--azul-light); color: var(--azul-text); }
+  .partida-badge.visible { display: inline-block; }
   .partida-arrow { font-size: 20px; color: var(--text2); transition: transform 0.2s; }
   .partida.open .partida-arrow { transform: rotate(90deg); }
   .partida-body { display: none; padding: 0 12px 12px; }
   .partida.open .partida-body { display: block; }
   .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .cat-btn { padding: 15px 10px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); color: var(--text); font-size: 14px; font-weight: 500; text-align: center; cursor: pointer; transition: all 0.15s; line-height: 1.3; }
-  .cat-btn.sel { background: var(--verde-light); border-color: var(--verde); color: var(--verde-text); }
+  .cat-btn.sel { background: var(--azul-light); border-color: var(--azul); color: var(--azul-text); }
   .cat-btn.sel::before { content: '✓ '; }
 
-  /* SAVE BTN */
-  .save-btn { width: 100%; padding: 18px; font-size: 17px; font-weight: 700; border: none; border-radius: var(--radius); background: #0072BC; color: #fff; cursor: pointer; margin-top: 6px; letter-spacing: 0.02em; }
-  .save-btn:active { background: var(--verde-dark); transform: scale(0.99); }
+  .save-btn { width: 100%; padding: 18px; font-size: 17px; font-weight: 700; border: none; border-radius: var(--radius); background: var(--azul); color: #fff; cursor: pointer; margin-top: 6px; letter-spacing: 0.02em; }
+  .save-btn:active { background: var(--azul-dark); }
+  .save-btn:disabled { background: var(--text2); }
 
-  /* TOAST */
-  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1A1A18; color: #fff; padding: 13px 20px; border-radius: 30px; font-size: 14px; font-weight: 500; z-index: 999; transition: transform 0.3s; white-space: nowrap; }
+  .loading { text-align: center; padding: 3rem 1rem; color: var(--text2); font-size: 15px; }
+  .spinner { display: inline-block; width: 24px; height: 24px; border: 3px solid var(--border); border-top-color: var(--azul); border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 10px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1A1A18; color: #fff; padding: 13px 20px; border-radius: 30px; font-size: 14px; font-weight: 500; z-index: 999; transition: transform 0.3s; white-space: nowrap; max-width: 90vw; text-align: center; }
   .toast.show { transform: translateX(-50%) translateY(0); }
-  .toast.ok { background: #005A96; }
+  .toast.ok { background: var(--azul-dark); }
   .toast.err { background: #A32D2D; }
 
-  /* HISTORIAL */
   .reg-card { background: var(--card); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 10px; border: 0.5px solid var(--border); }
-  .reg-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .reg-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; gap: 8px; }
   .reg-unit { font-size: 18px; font-weight: 700; color: var(--text); }
   .reg-fecha { font-size: 13px; color: var(--text2); }
+  .reg-del { border: none; background: none; color: #A32D2D; font-size: 22px; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0; }
   .reg-partida { margin-bottom: 8px; }
   .reg-partida-name { font-size: 12px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 5px; }
   .tags { display: flex; flex-wrap: wrap; gap: 5px; }
-  .tag { font-size: 12px; padding: 4px 10px; border-radius: 20px; background: var(--verde-light); color: var(--verde-text); font-weight: 500; }
-  .empty-msg { text-align: center; padding: 3rem 1rem; color: var(--text2); font-size: 15px; }
+  .tag { font-size: 12px; padding: 4px 10px; border-radius: 20px; background: var(--azul-light); color: var(--azul-text); font-weight: 500; }
+  .empty-msg { text-align: center; padding: 3rem 1rem; color: var(--text2); font-size: 15px; line-height: 1.6; }
 
-  /* DASHBOARD */
   .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
   .dash-card { background: var(--card); border-radius: var(--radius-sm); padding: 14px; border: 0.5px solid var(--border); }
   .dash-label { font-size: 11px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; line-height: 1.3; }
   .dash-val { font-size: 26px; font-weight: 700; color: var(--text); }
   .dash-sub { font-size: 12px; color: var(--text2); margin-top: 2px; }
   .progress-wrap { background: #E8E8E6; border-radius: 4px; height: 6px; margin-top: 8px; }
-  .progress-bar { height: 6px; border-radius: 4px; background: var(--verde); }
+  .progress-bar { height: 6px; border-radius: 4px; background: var(--azul); }
 
   .bloque-title { font-size: 13px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; margin: 16px 0 10px; }
   .unit-card { background: var(--card); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 8px; border: 0.5px solid var(--border); }
   .unit-name { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
   .unit-row { display: flex; align-items: center; margin-bottom: 5px; gap: 8px; }
-  .unit-row-label { font-size: 12px; color: var(--text2); width: 100px; flex-shrink: 0; }
+  .unit-row-label { font-size: 12px; color: var(--text2); width: 90px; flex-shrink: 0; }
   .mini-bar-bg { flex: 1; background: #E8E8E6; border-radius: 3px; height: 5px; }
-  .mini-bar-fill { height: 5px; border-radius: 3px; background: var(--verde); }
+  .mini-bar-fill { height: 5px; border-radius: 3px; background: var(--azul); }
   .unit-pct { font-size: 12px; font-weight: 600; color: var(--text); width: 30px; text-align: right; flex-shrink: 0; }
 </style>
 </head>
@@ -116,51 +114,48 @@
   </div>
 </nav>
 
-<!-- REGISTRO -->
 <div id="page-registro" class="page active">
   <div class="card">
-    <div class="two-col" style="margin-bottom:14px">
+    <div class="two-col">
       <div>
         <div class="field-label">Fecha</div>
         <input type="date" id="fecha">
       </div>
       <div>
         <div class="field-label">Unidad</div>
+        <select id="unidad">
+          <option value="">— Seleccionar —</option>
+          <optgroup label="Bloque F">
+            <option>F1</option><option>F2</option><option>F3</option><option>F4</option><option>F5</option>
+            <option>F6</option><option>F7</option><option>F8</option><option>F9</option><option>F10</option>
+            <option>F11</option><option>F12</option><option>F13</option>
+          </optgroup>
+          <optgroup label="Bloque E">
+            <option>E1</option><option>E2</option><option>E3</option><option>E4</option><option>E5</option>
+            <option>E6</option><option>E7</option><option>E8</option><option>E9</option><option>E10</option>
+            <option>E11</option><option>E12</option>
+          </optgroup>
+          <optgroup label="Bloque D">
+            <option>D3</option><option>D4</option><option>D5</option><option>D6</option><option>D7</option>
+            <option>D8</option><option>D9</option><option>D10</option><option>D11</option><option>D12</option>
+            <option>D13</option><option>D14</option><option>D15</option><option>D16</option><option>D17</option>
+            <option>D18</option><option>D19</option><option>D20</option>
+          </optgroup>
+        </select>
       </div>
     </div>
-    <select id="unidad">
-      <option value="">— Seleccionar unidad —</option>
-      <optgroup label="Bloque F">
-        <option>F1</option><option>F2</option><option>F3</option><option>F4</option><option>F5</option>
-        <option>F6</option><option>F7</option><option>F8</option><option>F9</option><option>F10</option>
-        <option>F11</option><option>F12</option><option>F13</option>
-      </optgroup>
-      <optgroup label="Bloque E">
-        <option>E1</option><option>E2</option><option>E3</option><option>E4</option><option>E5</option>
-        <option>E6</option><option>E7</option><option>E8</option><option>E9</option><option>E10</option>
-        <option>E11</option><option>E12</option>
-      </optgroup>
-      <optgroup label="Bloque D">
-        <option>D3</option><option>D4</option><option>D5</option><option>D6</option><option>D7</option>
-        <option>D8</option><option>D9</option><option>D10</option><option>D11</option><option>D12</option>
-        <option>D13</option><option>D14</option><option>D15</option><option>D16</option><option>D17</option>
-        <option>D18</option><option>D19</option><option>D20</option>
-      </optgroup>
-    </select>
   </div>
 
   <div style="font-size:13px;color:var(--text2);margin-bottom:10px;padding:0 2px;">Toca una partida y marca las categorías completadas hoy:</div>
-
   <div id="partidas-list"></div>
-  <button class="save-btn" onclick="guardar()">Guardar registro</button>
+  <button class="save-btn" id="save-btn" onclick="guardar()">Guardar registro</button>
+  <div style="height:20px"></div>
 </div>
 
-<!-- HISTORIAL -->
 <div id="page-historial" class="page">
   <div id="historial-list"></div>
 </div>
 
-<!-- DASHBOARD -->
 <div id="page-dashboard" class="page">
   <div class="dash-grid" id="dash-cards"></div>
   <div id="dash-units"></div>
@@ -169,6 +164,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxEIraKjZeTntQgOywEyi-7qTyu_h34jkeVdDR_8igarhk0A6X4-3wDuD69QSCrNDpXrw/exec';
 const PARTIDAS = ['Encofrado','Acero','Inst. eléctricas','Inst. sanitarias','Concreto'];
 const ICONS    = ['🧱','⚙️','💡','🔧','🏗️'];
 const COLORS   = ['#FFF3E0','#E3F2FD','#FFF9C4','#F3E5F5','#E8F5E9'];
@@ -181,10 +177,6 @@ const BLOQUES  = [{label:'Bloque F',units:UNITS_F},{label:'Bloque E',units:UNITS
 
 let selMap = {};
 let registros = [];
-
-try { registros = JSON.parse(localStorage.getItem('obra_v3')||'[]'); } catch(e){}
-
-function save(){ try{localStorage.setItem('obra_v3',JSON.stringify(registros));}catch(e){} }
 
 function initDate(){
   const d = new Date();
@@ -217,8 +209,7 @@ function buildPartidas(){
 }
 
 function toggleP(pi){
-  const el = document.getElementById('p-'+pi);
-  el.classList.toggle('open');
+  document.getElementById('p-'+pi).classList.toggle('open');
 }
 
 function toggleCat(pi,ci){
@@ -230,9 +221,7 @@ function toggleCat(pi,ci){
   else { badge.classList.remove('visible'); }
 }
 
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxEIraKjZeTntQgOywEyi-7qTyu_h34jkeVdDR_8igarhk0A6X4-3wDuD69QSCrNDpXrw/exec';
-
-function guardar(){
+async function guardar(){
   const u = document.getElementById('unidad').value;
   if(!u){ toast('Selecciona una unidad','err'); return; }
   const partidas = {};
@@ -242,21 +231,28 @@ function guardar(){
   });
   if(!algo){ toast('Marca al menos una categoría','err'); return; }
   const fecha = document.getElementById('fecha').value || new Date().toISOString().split('T')[0];
-  const registro = {fecha, unidad:u, partidas, ts:Date.now()};
-  registros.push(registro);
-  save();
+  const ts = Date.now();
+  const btn = document.getElementById('save-btn');
+  btn.disabled = true; btn.textContent = 'Guardando...';
   toast('Guardando...','');
-  resetForm();
-  const form = new FormData();
-  form.append('data', JSON.stringify({fecha, unidad:u, partidas}));
-  fetch(SHEETS_URL, {method:'POST', mode:'no-cors', body: form})
-  .then(()=>toast('✓ Guardado en Sheets — '+u,'ok'))
-  .catch(()=>toast('✓ Guardado local (sin conexión)','ok'));
+  try {
+    const form = new FormData();
+    form.append('action','save');
+    form.append('data', JSON.stringify({fecha, unidad:u, partidas, ts}));
+    await fetch(SHEETS_URL, {method:'POST', mode:'no-cors', body: form});
+    toast('✓ Guardado — '+u,'ok');
+    resetForm();
+    if(document.getElementById('page-historial').classList.contains('active')) await cargarHistorial();
+    if(document.getElementById('page-dashboard').classList.contains('active')) await cargarDashboard();
+  } catch(e){
+    toast('Error al guardar. Intenta de nuevo.','err');
+  }
+  btn.disabled = false; btn.textContent = 'Guardar registro';
 }
 
 function resetForm(){
-  document.getElementById('fecha').value=new Date().toISOString().split('T')[0];
   document.getElementById('unidad').value='';
+  document.getElementById('fecha').value=new Date().toISOString().split('T')[0];
   PARTIDAS.forEach((_,pi)=>{
     selMap[pi]=new Set();
     CATS.forEach((_,ci)=>{ const b=document.getElementById('btn-'+pi+'-'+ci); if(b)b.classList.remove('sel'); });
@@ -265,78 +261,112 @@ function resetForm(){
   });
 }
 
+async function fetchRegistros(){
+  const res = await fetch(SHEETS_URL+'?t='+Date.now());
+  const data = await res.json();
+  const rows = data.rows || [];
+  if(rows.length <= 1) return [];
+  const grouped = {};
+  rows.slice(1).forEach(r=>{
+    const [fecha,unidad,partida,cats,,ts] = r;
+    if(!unidad) return;
+    const key = ts || (fecha+'_'+unidad);
+    if(!grouped[key]) grouped[key] = {fecha, unidad, partidas:{}, ts: ts||key};
+    grouped[key].partidas[partida] = String(cats).split(', ');
+  });
+  return Object.values(grouped).sort((a,b)=>String(b.ts).localeCompare(String(a.ts)));
+}
+
+async function cargarHistorial(){
+  const el = document.getElementById('historial-list');
+  el.innerHTML = '<div class="loading"><div class="spinner"></div><br>Cargando registros...</div>';
+  try {
+    registros = await fetchRegistros();
+    if(!registros.length){ el.innerHTML='<div class="empty-msg">Sin registros aún.<br>Empieza registrando el avance de hoy.</div>'; return; }
+    el.innerHTML = registros.map(r=>{
+      const rows = Object.entries(r.partidas).map(([p,cats])=>`
+        <div class="reg-partida">
+          <div class="reg-partida-name">${p}</div>
+          <div class="tags">${cats.map(c=>`<span class="tag">${c}</span>`).join('')}</div>
+        </div>`).join('');
+      return `<div class="reg-card">
+        <div class="reg-header">
+          <div class="reg-unit">${r.unidad}</div>
+          <div class="reg-fecha">${r.fecha}</div>
+          <button class="reg-del" onclick="borrar('${r.ts}')" title="Borrar">×</button>
+        </div>${rows}</div>`;
+    }).join('');
+  } catch(e){
+    el.innerHTML='<div class="empty-msg">Error al cargar. Verifica tu conexión.</div>';
+  }
+}
+
+async function borrar(ts){
+  if(!confirm('¿Borrar este registro?')) return;
+  toast('Borrando...','');
+  try {
+    const form = new FormData();
+    form.append('action','delete');
+    form.append('ts', ts);
+    await fetch(SHEETS_URL, {method:'POST', mode:'no-cors', body: form});
+    toast('Registro borrado','ok');
+    await cargarHistorial();
+    await cargarDashboard();
+  } catch(e){
+    toast('Error al borrar','err');
+  }
+}
+
+async function cargarDashboard(){
+  const cardsEl = document.getElementById('dash-cards');
+  const unitsEl = document.getElementById('dash-units');
+  cardsEl.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+  try {
+    registros = await fetchRegistros();
+    const TOTAL = 43; const TC = CATS.length;
+    cardsEl.innerHTML = PARTIDAS.map(p=>{
+      const comp = ALL_UNITS.filter(u=>registros.some(r=>r.unidad===u&&r.partidas[p]&&r.partidas[p].length===TC)).length;
+      const pct = Math.round(comp/TOTAL*100);
+      return `<div class="dash-card">
+        <div class="dash-label">${p}</div>
+        <div class="dash-val">${pct}%</div>
+        <div class="dash-sub">${comp} de ${TOTAL} unid.</div>
+        <div class="progress-wrap"><div class="progress-bar" style="width:${pct}%"></div></div>
+      </div>`;
+    }).join('');
+
+    unitsEl.innerHTML = BLOQUES.map(b=>`
+      <div class="bloque-title">${b.label}</div>
+      ${b.units.map(u=>{
+        const rows = PARTIDAS.map(p=>{
+          const done = new Set(registros.filter(r=>r.unidad===u&&r.partidas[p]).flatMap(r=>r.partidas[p]));
+          const pct = Math.round(done.size/TC*100);
+          return `<div class="unit-row">
+            <div class="unit-row-label">${p.replace('Inst. ','I.')}</div>
+            <div class="mini-bar-bg"><div class="mini-bar-fill" style="width:${pct}%"></div></div>
+            <div class="unit-pct">${pct}%</div>
+          </div>`;
+        }).join('');
+        return `<div class="unit-card"><div class="unit-name">${u}</div>${rows}</div>`;
+      }).join('')}
+    `).join('');
+  } catch(e){
+    cardsEl.innerHTML='<div class="empty-msg">Error al cargar dashboard.</div>';
+  }
+}
+
 function toast(msg,type=''){
   const t=document.getElementById('toast');
   t.textContent=msg; t.className='toast '+(type||''); t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),2800);
 }
 
-function borrarReg(ts){
-  if(!confirm('¿Borrar este registro?')) return;
-  registros = registros.filter(r=>r.ts !== ts);
-  save();
-  renderHistorial();
-  renderDashboard();
-  toast('Registro borrado','');
-}
-
-function renderHistorial(){
-  const el=document.getElementById('historial-list');
-  if(!registros.length){ el.innerHTML='<div class="empty-msg">Sin registros aún.<br>Empieza registrando el avance de hoy.</div>'; return; }
-  const sorted=[...registros].sort((a,b)=>b.ts-a.ts);
-  el.innerHTML=sorted.map(r=>{
-    const rows=Object.entries(r.partidas).map(([p,cats])=>`
-      <div class="reg-partida">
-        <div class="reg-partida-name">${p}</div>
-        <div class="tags">${cats.map(c=>`<span class="tag">${c}</span>`).join('')}</div>
-      </div>`).join('');
-    return `<div class="reg-card" id="rc-${r.ts}">
-      <div class="reg-header">
-        <div class="reg-unit">${r.unidad}</div>
-        <div class="reg-fecha">${r.fecha}</div>
-        <button onclick="borrarReg(${r.ts})" style="border:none;background:none;color:#A32D2D;font-size:20px;cursor:pointer;padding:0 0 0 8px;line-height:1">×</button>
-      </div>${rows}</div>`;
-  }).join('');
-}
-
-function renderDashboard(){
-  const TOTAL=43; const TC=CATS.length;
-  const cards=document.getElementById('dash-cards');
-  cards.innerHTML=PARTIDAS.map(p=>{
-    const comp=ALL_UNITS.filter(u=>registros.some(r=>r.unidad===u&&r.partidas[p]&&r.partidas[p].length===TC)).length;
-    const pct=Math.round(comp/TOTAL*100);
-    return `<div class="dash-card">
-      <div class="dash-label">${p}</div>
-      <div class="dash-val">${pct}%</div>
-      <div class="dash-sub">${comp} de ${TOTAL} unid.</div>
-      <div class="progress-wrap"><div class="progress-bar" style="width:${pct}%"></div></div>
-    </div>`;
-  }).join('');
-
-  const units=document.getElementById('dash-units');
-  units.innerHTML=BLOQUES.map(b=>`
-    <div class="bloque-title">${b.label}</div>
-    ${b.units.map(u=>{
-      const rows=PARTIDAS.map(p=>{
-        const done=new Set(registros.filter(r=>r.unidad===u&&r.partidas[p]).flatMap(r=>r.partidas[p]));
-        const pct=Math.round(done.size/TC*100);
-        return `<div class="unit-row">
-          <div class="unit-row-label">${p.replace('Inst. ','I.')}</div>
-          <div class="mini-bar-bg"><div class="mini-bar-fill" style="width:${pct}%"></div></div>
-          <div class="unit-pct">${pct}%</div>
-        </div>`;
-      }).join('');
-      return `<div class="unit-card"><div class="unit-name">${u}</div>${rows}</div>`;
-    }).join('')}
-  `).join('');
-}
-
 function goTab(id){
   document.querySelectorAll('.nav-tab').forEach((t,i)=>t.classList.toggle('active',['registro','historial','dashboard'][i]===id));
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
-  if(id==='historial') renderHistorial();
-  if(id==='dashboard') renderDashboard();
+  if(id==='historial') cargarHistorial();
+  if(id==='dashboard') cargarDashboard();
 }
 
 initDate();
