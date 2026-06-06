@@ -3,109 +3,322 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#005A96">
+<meta name="theme-color" content="#0A1628">
 <title>Avance de Obra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+:root {
+  --azul: #1A6BF0;
+  --azul-dark: #005A96;
+  --azul-mid: #0D2444;
+  --azul-light: rgba(26,107,240,0.08);
+  --azul-border: rgba(26,107,240,0.25);
+  --dorado: #F5A800;
+  --dorado-light: rgba(245,168,0,0.1);
+  --bg: #F7F9FC;
+  --surface: #FFFFFF;
+  --surface2: #EEF3FA;
+  --text: #0D1E35;
+  --text2: #5A7090;
+  --text3: #9BADC4;
+  --border: rgba(0,0,0,0.06);
+  --border2: rgba(0,0,0,0.1);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-xs: 8px;
+  --font: 'DM Sans', sans-serif;
+  --mono: 'DM Mono', monospace;
+  --shadow: 0 4px 24px rgba(0,0,0,0.08);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+@media (prefers-color-scheme: dark) {
   :root {
-    --azul: #0072BC;
-    --azul-dark: #005A96;
-    --azul-light: #E6F2FB;
-    --azul-text: #003D6B;
+    --azul: #1A6BF0;
+    --azul-dark: #0A1628;
+    --azul-mid: #0D2444;
+    --azul-light: rgba(26,107,240,0.1);
+    --azul-border: rgba(26,107,240,0.3);
     --dorado: #F5A800;
-    --bg: #F5F5F3;
-    --card: #FFFFFF;
-    --text: #3D3D3D;
-    --text2: #7A7A7A;
-    --border: rgba(0,0,0,0.1);
-    --radius: 14px;
-    --radius-sm: 10px;
+    --dorado-light: rgba(245,168,0,0.12);
+    --bg: #060E1C;
+    --surface: #0D1E35;
+    --surface2: #132540;
+    --text: #EEF2FF;
+    --text2: #6B82A8;
+    --text3: #3D5070;
+    --border: rgba(255,255,255,0.06);
+    --border2: rgba(255,255,255,0.1);
+    --shadow: 0 4px 24px rgba(0,0,0,0.4);
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
 
-  .nav { background: var(--azul-dark); padding: 0; position: sticky; top: 0; z-index: 100; border-bottom: 4px solid var(--dorado); }
-  .nav-top { padding: 16px 16px 0; display: flex; align-items: center; justify-content: space-between; }
-  .nav-title { color: #fff; font-size: 15px; font-weight: 600; line-height: 1.3; }
-  .nav-date { color: rgba(255,255,255,0.75); font-size: 13px; flex-shrink: 0; margin-left: 8px; }
-  .nav-tabs { display: flex; margin-top: 12px; }
-  .nav-tab { flex: 1; padding: 11px 0; text-align: center; color: rgba(255,255,255,0.6); font-size: 13px; font-weight: 500; cursor: pointer; border-bottom: 2.5px solid transparent; transition: all 0.15s; }
-  .nav-tab.active { color: #fff; border-bottom-color: #fff; }
+/* GLOW BG - solo dark mode */
+@media (prefers-color-scheme: dark) {
+  body::after {
+    content: '';
+    position: fixed; top: -200px; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 400px;
+    background: radial-gradient(ellipse, rgba(26,107,240,0.15) 0%, transparent 70%);
+    pointer-events: none; z-index: 0;
+  }
+}
 
-  .page { display: none; padding: 16px; }
-  .page.active { display: block; }
+/* NAV */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: #005A96;
+  border-bottom: 4px solid #F5A800;
+}
+.nav-top { padding: 14px 20px 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.nav-brand { display: flex; flex-direction: column; }
+.nav-project { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.65); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+.nav-title { font-size: 15px; font-weight: 600; color: #fff; letter-spacing: -0.01em; }
+.nav-date-badge {
+  font-family: var(--mono); font-size: 11px; font-weight: 500;
+  color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2); border-radius: 6px;
+  padding: 5px 9px; flex-shrink: 0; white-space: nowrap;
+}
+.nav-tabs { display: flex; padding: 0 12px; margin-top: 10px; gap: 4px; }
+.nav-tab {
+  flex: 1; padding: 9px 0; text-align: center;
+  color: rgba(255,255,255,0.55); font-size: 13px; font-weight: 500;
+  cursor: pointer; border-bottom: 2px solid transparent;
+  transition: all 0.2s; border-radius: var(--radius-xs) var(--radius-xs) 0 0;
+}
+.nav-tab.active { color: #fff; border-bottom-color: #fff; }
+.nav-tab:not(.active):hover { color: rgba(255,255,255,0.8); }
 
-  .card { background: var(--card); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; border: 0.5px solid var(--border); }
-  .field-label { font-size: 12px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+/* PAGES */
+.page { display: none; padding: 20px 16px; position: relative; z-index: 1; }
+.page.active { display: block; animation: fadeUp 0.25s ease; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-  select, input[type=date] { width: 100%; font-size: 16px; padding: 14px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--card); color: var(--text); appearance: none; -webkit-appearance: none; }
-  select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237A7A7A' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; background-color: var(--card); }
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+/* DATE INPUT */
+.date-row { margin-bottom: 20px; }
+.field-label {
+  font-size: 10px; font-weight: 700; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;
+}
+input[type=date] {
+  width: 100%; font-size: 15px; font-family: var(--mono);
+  padding: 12px 14px; border: 1px solid var(--border2);
+  border-radius: var(--radius-sm); background: var(--surface);
+  color: var(--text); appearance: none; -webkit-appearance: none;
+  transition: border-color 0.2s;
+}
+input[type=date]:focus { outline: none; border-color: var(--azul); }
 
-  .partida { background: var(--card); border-radius: var(--radius); margin-bottom: 10px; border: 1px solid var(--border); overflow: hidden; }
-  .partida-hdr { display: flex; align-items: center; padding: 16px; cursor: pointer; gap: 10px; }
-  .partida-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-  .partida-name { font-size: 15px; font-weight: 600; color: var(--text); flex: 1; }
-  .partida-badge { font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 20px; display: none; background: var(--azul-light); color: var(--azul-text); }
-  .partida-badge.visible { display: inline-block; }
-  .partida-arrow { font-size: 20px; color: var(--text2); transition: transform 0.2s; }
-  .partida.open .partida-arrow { transform: rotate(90deg); }
-  .partida-body { display: none; padding: 0 12px 12px; }
-  .partida.open .partida-body { display: block; }
-  .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .cat-btn { padding: 15px 10px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); color: var(--text); font-size: 14px; font-weight: 500; text-align: center; cursor: pointer; transition: all 0.15s; line-height: 1.3; }
-  .cat-btn.sel { background: var(--azul-light); border-color: var(--azul); color: var(--azul-text); }
-  .cat-btn.sel::before { content: '✓ '; }
+/* STEP INDICATOR */
+.step-row { display: flex; align-items: center; gap: 8px; margin-bottom: 20px; }
+.step-pill {
+  font-size: 11px; font-weight: 600; padding: 4px 12px;
+  border-radius: 20px; border: 1px solid var(--border2);
+  color: var(--text3); background: none; transition: all 0.25s;
+  white-space: nowrap;
+}
+.step-pill.done { background: var(--azul); border-color: var(--azul); color: #fff; }
+.step-line { flex: 1; height: 1px; background: var(--border2); }
 
-  .save-btn { width: 100%; padding: 18px; font-size: 17px; font-weight: 700; border: none; border-radius: var(--radius); background: var(--azul); color: #fff; cursor: pointer; margin-top: 6px; letter-spacing: 0.02em; }
-  .save-btn:active { background: var(--azul-dark); }
-  .save-btn:disabled { background: var(--text2); }
+/* SECTION CARD */
+.section-card {
+  background: var(--surface); border: 1px solid var(--border2);
+  border-radius: var(--radius); padding: 16px; margin-bottom: 14px;
+  transition: border-color 0.2s;
+}
+.section-card.highlighted { border-color: var(--azul-border); }
 
-  .loading { text-align: center; padding: 3rem 1rem; color: var(--text2); font-size: 15px; }
-  .spinner { display: inline-block; width: 24px; height: 24px; border: 3px solid var(--border); border-top-color: var(--azul); border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 10px; }
-  @keyframes spin { to { transform: rotate(360deg); } }
+/* PARTIDA GRID */
+.partida-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.partida-btn {
+  padding: 14px 10px; border: 1px solid var(--border2);
+  border-radius: var(--radius-sm); background: var(--surface2);
+  color: var(--text2); font-size: 13px; font-weight: 600;
+  font-family: var(--font); text-align: center; cursor: pointer;
+  transition: all 0.18s; position: relative; overflow: hidden;
+}
+.partida-btn::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--azul), #0D5FE0);
+  opacity: 0; transition: opacity 0.18s;
+}
+.partida-btn span { position: relative; z-index: 1; }
+.partida-btn.active { border-color: var(--azul); color: #fff; }
+.partida-btn.active::before { opacity: 1; }
 
-  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: #1A1A18; color: #fff; padding: 13px 20px; border-radius: 30px; font-size: 14px; font-weight: 500; z-index: 999; transition: transform 0.3s; white-space: nowrap; max-width: 90vw; text-align: center; }
-  .toast.show { transform: translateX(-50%) translateY(0); }
-  .toast.ok { background: var(--azul-dark); }
-  .toast.err { background: #A32D2D; }
+/* FRENTE GRID */
+.frente-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+.frente-btn {
+  padding: 12px 6px; border: 1px solid var(--border2);
+  border-radius: var(--radius-sm); background: var(--surface2);
+  color: var(--text2); font-size: 12px; font-weight: 600;
+  font-family: var(--font); text-align: center; cursor: pointer;
+  transition: all 0.15s;
+}
+.frente-btn.active {
+  border-color: var(--dorado); background: var(--dorado-light);
+  color: var(--dorado);
+}
 
-  .reg-card { background: var(--card); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 10px; border: 0.5px solid var(--border); }
-  .reg-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; gap: 8px; }
-  .reg-unit { font-size: 18px; font-weight: 700; color: var(--text); }
-  .reg-fecha { font-size: 13px; color: var(--text2); }
-  .reg-del { border: none; background: none; color: #A32D2D; font-size: 22px; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0; }
-  .reg-partida { margin-bottom: 8px; }
-  .reg-partida-name { font-size: 12px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 5px; }
-  .tags { display: flex; flex-wrap: wrap; gap: 5px; }
-  .tag { font-size: 12px; padding: 4px 10px; border-radius: 20px; background: var(--azul-light); color: var(--azul-text); font-weight: 500; }
-  .empty-msg { text-align: center; padding: 3rem 1rem; color: var(--text2); font-size: 15px; line-height: 1.6; }
+/* UNIDADES */
+.bloque-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 8px; margin-top: 14px;
+}
+.bloque-label { font-size: 11px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; }
+.sel-all-btn {
+  font-size: 11px; font-weight: 600; padding: 4px 10px;
+  border: 1px solid var(--azul-border); border-radius: 20px;
+  background: none; color: var(--azul); cursor: pointer;
+  font-family: var(--font); transition: all 0.15s;
+}
+.sel-all-btn:hover { background: var(--azul-light); }
+.unit-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+.unit-btn {
+  padding: 11px 4px; border: 1px solid var(--border2);
+  border-radius: var(--radius-xs); background: var(--surface2);
+  color: var(--text2); font-size: 12px; font-weight: 600;
+  font-family: var(--mono); text-align: center; cursor: pointer;
+  transition: all 0.12s;
+}
+.unit-btn.sel {
+  border-color: var(--azul-border); background: var(--azul-light);
+  color: var(--azul);
+}
 
-  .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
-  .dash-card { background: var(--card); border-radius: var(--radius-sm); padding: 14px; border: 0.5px solid var(--border); }
-  .dash-label { font-size: 11px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; line-height: 1.3; }
-  .dash-val { font-size: 26px; font-weight: 700; color: var(--text); }
-  .dash-sub { font-size: 12px; color: var(--text2); margin-top: 2px; }
-  .progress-wrap { background: #E8E8E6; border-radius: 4px; height: 6px; margin-top: 8px; }
-  .progress-bar { height: 6px; border-radius: 4px; background: var(--azul); }
+/* RESUMEN */
+.resumen {
+  background: linear-gradient(135deg, rgba(26,107,240,0.08), rgba(245,168,0,0.05));
+  border: 1px solid var(--azul-border); border-radius: var(--radius-sm);
+  padding: 12px 16px; margin-bottom: 14px;
+  font-size: 13px; color: var(--text); line-height: 1.6;
+  display: none; animation: fadeUp 0.2s ease;
+}
+.resumen.visible { display: block; }
+.resumen strong { color: var(--azul); }
+.resumen small { color: var(--text2); font-family: var(--mono); font-size: 11px; }
 
-  .bloque-title { font-size: 13px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; margin: 16px 0 10px; }
-  .unit-card { background: var(--card); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 8px; border: 0.5px solid var(--border); }
-  .unit-name { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
-  .unit-row { display: flex; align-items: center; margin-bottom: 5px; gap: 8px; }
-  .unit-row-label { font-size: 12px; color: var(--text2); width: 90px; flex-shrink: 0; }
-  .mini-bar-bg { flex: 1; background: #E8E8E6; border-radius: 3px; height: 5px; }
-  .mini-bar-fill { height: 5px; border-radius: 3px; background: var(--azul); }
-  .unit-pct { font-size: 12px; font-weight: 600; color: var(--text); width: 30px; text-align: right; flex-shrink: 0; }
+/* SAVE BTN */
+.save-btn {
+  width: 100%; padding: 16px; font-size: 15px; font-weight: 700;
+  font-family: var(--font); border: none; border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, #1A6BF0, #0D5FE0);
+  color: #fff; cursor: pointer; letter-spacing: 0.02em;
+  box-shadow: 0 4px 20px rgba(26,107,240,0.35);
+  transition: all 0.2s; display: none;
+}
+.save-btn:active { transform: scale(0.98); box-shadow: 0 2px 10px rgba(26,107,240,0.3); }
+.save-btn:disabled { background: var(--surface2); box-shadow: none; color: var(--text3); }
+
+/* LOADING */
+.loading { text-align: center; padding: 3rem 1rem; color: var(--text2); font-size: 14px; }
+.spinner {
+  display: inline-block; width: 22px; height: 22px;
+  border: 2px solid var(--border2); border-top-color: var(--azul);
+  border-radius: 50%; animation: spin 0.7s linear infinite; margin-bottom: 10px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* TOAST */
+.toast {
+  position: fixed; bottom: 28px; left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--surface2); color: var(--text);
+  border: 1px solid var(--border2);
+  padding: 12px 20px; border-radius: 30px;
+  font-size: 13px; font-weight: 500; z-index: 999;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  white-space: nowrap; max-width: 90vw; text-align: center;
+  backdrop-filter: blur(20px); box-shadow: var(--shadow);
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.ok { background: rgba(26,107,240,0.9); border-color: var(--azul); color: #fff; }
+.toast.err { background: rgba(200,40,40,0.9); border-color: rgba(200,40,40,0.5); color: #fff; }
+
+/* HISTORIAL */
+.reg-card {
+  background: var(--surface); border: 1px solid var(--border2);
+  border-radius: var(--radius); padding: 16px; margin-bottom: 10px;
+  transition: border-color 0.2s;
+}
+.reg-card:hover { border-color: var(--border2); }
+.reg-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; gap: 10px; }
+.reg-partida-title { font-size: 17px; font-weight: 700; color: var(--text); letter-spacing: -0.02em; }
+.reg-meta { display: flex; align-items: center; gap: 8px; margin-top: 3px; flex-wrap: wrap; }
+.reg-fecha { font-size: 11px; font-family: var(--mono); color: var(--text2); }
+.reg-del {
+  border: 1px solid rgba(200,40,40,0.25); background: rgba(200,40,40,0.08);
+  color: #E05555; font-size: 16px; cursor: pointer;
+  padding: 4px 10px; line-height: 1; border-radius: var(--radius-xs);
+  flex-shrink: 0; transition: all 0.15s; font-family: var(--font);
+}
+.reg-del:hover { background: rgba(200,40,40,0.2); }
+.reg-section { margin-bottom: 10px; }
+.reg-section-label { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+.tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.tag {
+  font-size: 11px; padding: 4px 10px; border-radius: 20px;
+  font-weight: 500; font-family: var(--mono);
+}
+.tag-frente { background: var(--dorado-light); color: var(--dorado); border: 1px solid rgba(245,168,0,0.2); }
+.tag-unit { background: var(--azul-light); color: #7AADFF; border: 1px solid var(--azul-border); }
+.empty-msg { text-align: center; padding: 4rem 1rem; color: var(--text2); font-size: 15px; line-height: 1.8; }
+
+/* DASHBOARD */
+.dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+.dash-card {
+  background: var(--surface); border: 1px solid var(--border2);
+  border-radius: var(--radius-sm); padding: 16px;
+  position: relative; overflow: hidden;
+}
+.dash-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--azul), var(--dorado));
+  opacity: 0.6;
+}
+.dash-label { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; line-height: 1.4; }
+.dash-val { font-size: 28px; font-weight: 700; color: var(--text); font-family: var(--mono); letter-spacing: -0.02em; }
+.dash-sub { font-size: 11px; color: var(--text2); margin-top: 3px; font-family: var(--mono); }
+.progress-wrap { background: var(--surface2); border-radius: 4px; height: 4px; margin-top: 10px; }
+.progress-bar { height: 4px; border-radius: 4px; background: linear-gradient(90deg, var(--azul), #5A9EFF); transition: width 0.6s ease; }
+
+.bloque-title {
+  font-size: 11px; font-weight: 700; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  margin: 20px 0 10px; padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.unit-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 14px; margin-bottom: 8px;
+}
+.unit-name { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 10px; font-family: var(--mono); }
+.unit-row { display: flex; align-items: center; margin-bottom: 6px; gap: 8px; }
+.unit-row-label { font-size: 11px; color: var(--text2); width: 85px; flex-shrink: 0; font-weight: 500; }
+.mini-bar-bg { flex: 1; background: var(--surface2); border-radius: 3px; height: 4px; }
+.mini-bar-fill { height: 4px; border-radius: 3px; background: linear-gradient(90deg, var(--azul), #5A9EFF); }
+.unit-pct { font-size: 11px; font-weight: 600; color: var(--text2); width: 30px; text-align: right; flex-shrink: 0; font-family: var(--mono); }
+
+/* DIVIDER */
+.divider { height: 1px; background: var(--border); margin: 16px 0; }
 </style>
 </head>
 <body>
 
 <nav class="nav">
   <div class="nav-top">
-    <div class="nav-title">Alameda Vista Verde II · Avance de Obra</div>
-    <div class="nav-date" id="nav-date"></div>
+    <div class="nav-brand">
+      <div class="nav-project">Los Portales</div>
+      <div class="nav-title">Alameda Vista Verde II</div>
+    </div>
+    <div class="nav-date-badge" id="nav-date"></div>
   </div>
   <div class="nav-tabs">
     <div class="nav-tab active" onclick="goTab('registro')">Registrar</div>
@@ -114,48 +327,48 @@
   </div>
 </nav>
 
+<!-- REGISTRO -->
 <div id="page-registro" class="page active">
-  <div class="card">
-    <div class="two-col">
-      <div>
-        <div class="field-label">Fecha</div>
-        <input type="date" id="fecha">
-      </div>
-      <div>
-        <div class="field-label">Unidad</div>
-        <select id="unidad">
-          <option value="">— Seleccionar —</option>
-          <optgroup label="Bloque F">
-            <option>F1</option><option>F2</option><option>F3</option><option>F4</option><option>F5</option>
-            <option>F6</option><option>F7</option><option>F8</option><option>F9</option><option>F10</option>
-            <option>F11</option><option>F12</option><option>F13</option>
-          </optgroup>
-          <optgroup label="Bloque E">
-            <option>E1</option><option>E2</option><option>E3</option><option>E4</option><option>E5</option>
-            <option>E6</option><option>E7</option><option>E8</option><option>E9</option><option>E10</option>
-            <option>E11</option><option>E12</option>
-          </optgroup>
-          <optgroup label="Bloque D">
-            <option>D3</option><option>D4</option><option>D5</option><option>D6</option><option>D7</option>
-            <option>D8</option><option>D9</option><option>D10</option><option>D11</option><option>D12</option>
-            <option>D13</option><option>D14</option><option>D15</option><option>D16</option><option>D17</option>
-            <option>D18</option><option>D19</option><option>D20</option>
-          </optgroup>
-        </select>
-      </div>
-    </div>
+
+  <div class="date-row">
+    <div class="field-label">Fecha de registro</div>
+    <input type="date" id="fecha">
   </div>
 
-  <div style="font-size:13px;color:var(--text2);margin-bottom:10px;padding:0 2px;">Toca una partida y marca las categorías completadas hoy:</div>
-  <div id="partidas-list"></div>
+  <div class="step-row">
+    <div class="step-pill" id="step1">① Partida</div>
+    <div class="step-line"></div>
+    <div class="step-pill" id="step2">② Frente</div>
+    <div class="step-line"></div>
+    <div class="step-pill" id="step3">③ Unidades</div>
+  </div>
+
+  <div class="section-card" id="card-partida">
+    <div class="field-label" style="margin-bottom:12px">Selecciona la partida</div>
+    <div class="partida-grid" id="partida-grid"></div>
+  </div>
+
+  <div class="section-card" id="frentes-section" style="display:none">
+    <div class="field-label" style="margin-bottom:12px">Selecciona el frente <span style="color:var(--text3);font-weight:400;text-transform:none;letter-spacing:0">(puedes elegir varios)</span></div>
+    <div class="frente-grid" id="frente-grid"></div>
+  </div>
+
+  <div class="section-card" id="unidades-section" style="display:none">
+    <div class="field-label" style="margin-bottom:4px">Selecciona las unidades</div>
+    <div id="unidades-wrap"></div>
+  </div>
+
+  <div class="resumen" id="resumen"></div>
   <button class="save-btn" id="save-btn" onclick="guardar()">Guardar registro</button>
-  <div style="height:20px"></div>
+  <div style="height:32px"></div>
 </div>
 
+<!-- HISTORIAL -->
 <div id="page-historial" class="page">
   <div id="historial-list"></div>
 </div>
 
+<!-- DASHBOARD -->
 <div id="page-dashboard" class="page">
   <div class="dash-grid" id="dash-cards"></div>
   <div id="dash-units"></div>
@@ -165,100 +378,147 @@
 
 <script>
 const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxEIraKjZeTntQgOywEyi-7qTyu_h34jkeVdDR_8igarhk0A6X4-3wDuD69QSCrNDpXrw/exec';
-const PARTIDAS = ['Encofrado','Acero','Inst. eléctricas','Inst. sanitarias','Concreto'];
-const ICONS    = ['🧱','⚙️','💡','🔧','🏗️'];
-const COLORS   = ['#FFF3E0','#E3F2FD','#FFF9C4','#F3E5F5','#E8F5E9'];
-const CATS     = ['Platea','Muro P1','Losa P1','Muro P2','Losa P2'];
-const UNITS_F  = Array.from({length:13},(_,i)=>'F'+(i+1));
-const UNITS_E  = Array.from({length:12},(_,i)=>'E'+(i+1));
-const UNITS_D  = Array.from({length:18},(_,i)=>'D'+(i+3));
-const ALL_UNITS= [...UNITS_F,...UNITS_E,...UNITS_D];
-const BLOQUES  = [{label:'Bloque F',units:UNITS_F},{label:'Bloque E',units:UNITS_E},{label:'Bloque D',units:UNITS_D}];
+const PARTIDAS = ['Encofrado','Acero','Inst. Eléctricas','Inst. Sanitarias','Concreto'];
+const CATS = ['Platea','Muro P1','Losa P1','Muro P2','Losa P2'];
+const UNITS_F = Array.from({length:13},(_,i)=>'F'+(i+1));
+const UNITS_E = Array.from({length:12},(_,i)=>'E'+(i+1));
+const UNITS_D = Array.from({length:18},(_,i)=>'D'+(i+3));
+const ALL_UNITS = [...UNITS_F,...UNITS_E,...UNITS_D];
+const BLOQUES = [{label:'Bloque F',units:UNITS_F},{label:'Bloque E',units:UNITS_E},{label:'Bloque D',units:UNITS_D}];
 
-let selMap = {};
-let registros = [];
+let selPartida = null;
+let selFrente = new Set();
+let selUnidades = new Set();
 
 function initDate(){
   const d = new Date();
-  document.getElementById('nav-date').textContent = d.toLocaleDateString('es-PE',{day:'2-digit',month:'short'});
+  document.getElementById('nav-date').textContent = d.toLocaleDateString('es-PE',{day:'2-digit',month:'short',year:'numeric'});
   document.getElementById('fecha').value = d.toISOString().split('T')[0];
 }
 
 function buildPartidas(){
-  const el = document.getElementById('partidas-list');
-  el.innerHTML = '';
-  PARTIDAS.forEach((p,pi)=>{
-    selMap[pi] = new Set();
-    const div = document.createElement('div');
-    div.className = 'partida';
-    div.id = 'p-'+pi;
-    div.innerHTML = `
-      <div class="partida-hdr" onclick="toggleP(${pi})">
-        <div class="partida-icon" style="background:${COLORS[pi]}">${ICONS[pi]}</div>
-        <div class="partida-name">${p}</div>
-        <span class="partida-badge" id="badge-${pi}">0</span>
-        <span class="partida-arrow">›</span>
-      </div>
-      <div class="partida-body">
-        <div class="cat-grid" id="cats-${pi}">
-          ${CATS.map((c,ci)=>`<button class="cat-btn" id="btn-${pi}-${ci}" onclick="toggleCat(${pi},${ci})">${c}</button>`).join('')}
-        </div>
-      </div>`;
-    el.appendChild(div);
+  const el = document.getElementById('partida-grid');
+  el.innerHTML = PARTIDAS.map((p,i)=>
+    `<button class="partida-btn" id="pb-${i}" onclick="selectPartida(${i})"><span>${p}</span></button>`
+  ).join('');
+}
+
+function selectPartida(i){
+  selPartida = i;
+  selFrente.clear();
+  selUnidades.clear();
+  document.querySelectorAll('.partida-btn').forEach((b,j)=>b.classList.toggle('active', j===i));
+  document.getElementById('step1').classList.add('done');
+  document.getElementById('card-partida').classList.add('highlighted');
+  const fg = document.getElementById('frente-grid');
+  fg.innerHTML = CATS.map((c,j)=>
+    `<button class="frente-btn" id="fb-${j}" onclick="toggleFrente(${j})">${c}</button>`
+  ).join('');
+  document.getElementById('frentes-section').style.display='block';
+  document.getElementById('unidades-section').style.display='none';
+  document.getElementById('save-btn').style.display='none';
+  updateResumen();
+}
+
+function toggleFrente(j){
+  if(selFrente.has(j)) selFrente.delete(j);
+  else selFrente.add(j);
+  document.querySelectorAll('.frente-btn').forEach((b,k)=>{
+    b.classList.toggle('active', selFrente.has(k));
   });
+  document.getElementById('step2').classList.toggle('done', selFrente.size>0);
+  if(selFrente.size > 0){
+    buildUnidades();
+    document.getElementById('unidades-section').style.display='block';
+  } else {
+    document.getElementById('unidades-section').style.display='none';
+    document.getElementById('save-btn').style.display='none';
+  }
+  updateResumen();
 }
 
-function toggleP(pi){
-  document.getElementById('p-'+pi).classList.toggle('open');
+function buildUnidades(){
+  const wrap = document.getElementById('unidades-wrap');
+  wrap.innerHTML = BLOQUES.map(b=>`
+    <div class="bloque-header">
+      <div class="bloque-label">${b.label}</div>
+      <button class="sel-all-btn" onclick="selAll('${b.label}')">Sel. todos</button>
+    </div>
+    <div class="unit-grid">
+      ${b.units.map(u=>`<button class="unit-btn ${selUnidades.has(u)?'sel':''}" id="ub-${u}" onclick="toggleUnit('${u}')">${u}</button>`).join('')}
+    </div>
+  `).join('');
 }
 
-function toggleCat(pi,ci){
-  const btn = document.getElementById('btn-'+pi+'-'+ci);
-  if(selMap[pi].has(ci)){ selMap[pi].delete(ci); btn.classList.remove('sel'); }
-  else { selMap[pi].add(ci); btn.classList.add('sel'); }
-  const badge = document.getElementById('badge-'+pi);
-  if(selMap[pi].size > 0){ badge.textContent = selMap[pi].size; badge.classList.add('visible'); }
-  else { badge.classList.remove('visible'); }
+function toggleUnit(u){
+  if(selUnidades.has(u)) selUnidades.delete(u);
+  else selUnidades.add(u);
+  const btn = document.getElementById('ub-'+u);
+  if(btn) btn.classList.toggle('sel', selUnidades.has(u));
+  document.getElementById('step3').classList.toggle('done', selUnidades.size>0);
+  document.getElementById('save-btn').style.display = selUnidades.size>0 ? 'block' : 'none';
+  updateResumen();
+}
+
+function selAll(bloque){
+  const b = BLOQUES.find(x=>x.label===bloque);
+  if(!b) return;
+  const allSel = b.units.every(u=>selUnidades.has(u));
+  b.units.forEach(u=>{ if(allSel) selUnidades.delete(u); else selUnidades.add(u); });
+  buildUnidades();
+  document.getElementById('step3').classList.toggle('done', selUnidades.size>0);
+  document.getElementById('save-btn').style.display = selUnidades.size>0 ? 'block' : 'none';
+  updateResumen();
+}
+
+function updateResumen(){
+  const el = document.getElementById('resumen');
+  const p = selPartida!==null ? PARTIDAS[selPartida] : '';
+  const f = [...selFrente].map(i=>CATS[i]).join(', ');
+  const u = [...selUnidades].sort().join(', ');
+  if(p && f && u){
+    el.innerHTML = `<strong>${p}</strong> · ${f}<br><small>${selUnidades.size} unidad(es): ${u}</small>`;
+    el.classList.add('visible');
+  } else {
+    el.classList.remove('visible');
+  }
 }
 
 async function guardar(){
-  const u = document.getElementById('unidad').value;
-  if(!u){ toast('Selecciona una unidad','err'); return; }
-  const partidas = {};
-  let algo = false;
-  PARTIDAS.forEach((p,pi)=>{
-    if(selMap[pi].size){ partidas[p]=[...selMap[pi]].map(i=>CATS[i]); algo=true; }
-  });
-  if(!algo){ toast('Marca al menos una categoría','err'); return; }
+  if(selPartida===null){ toast('Selecciona una partida','err'); return; }
+  if(selFrente.size===0){ toast('Selecciona al menos un frente','err'); return; }
+  if(selUnidades.size===0){ toast('Selecciona al menos una unidad','err'); return; }
   const fecha = document.getElementById('fecha').value || new Date().toISOString().split('T')[0];
   const ts = Date.now();
+  const partida = PARTIDAS[selPartida];
+  const frentes = [...selFrente].map(i=>CATS[i]);
+  const unidades = [...selUnidades].sort();
   const btn = document.getElementById('save-btn');
-  btn.disabled = true; btn.textContent = 'Guardando...';
+  btn.disabled=true; btn.textContent='Guardando...';
   toast('Guardando...','');
   try {
     const form = new FormData();
     form.append('action','save');
-    form.append('data', JSON.stringify({fecha, unidad:u, partidas, ts}));
+    form.append('data', JSON.stringify({fecha, partida, frentes, unidades, ts}));
     await fetch(SHEETS_URL, {method:'POST', mode:'no-cors', body: form});
-    toast('✓ Guardado — '+u,'ok');
+    toast(`✓ Guardado — ${partida} · ${unidades.length} unidades`,'ok');
     resetForm();
-    if(document.getElementById('page-historial').classList.contains('active')) await cargarHistorial();
-    if(document.getElementById('page-dashboard').classList.contains('active')) await cargarDashboard();
   } catch(e){
     toast('Error al guardar. Intenta de nuevo.','err');
   }
-  btn.disabled = false; btn.textContent = 'Guardar registro';
+  btn.disabled=false; btn.textContent='Guardar registro';
 }
 
 function resetForm(){
-  document.getElementById('unidad').value='';
+  selPartida=null; selFrente.clear(); selUnidades.clear();
+  document.querySelectorAll('.partida-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('card-partida').classList.remove('highlighted');
+  document.getElementById('frentes-section').style.display='none';
+  document.getElementById('unidades-section').style.display='none';
+  document.getElementById('save-btn').style.display='none';
+  document.getElementById('resumen').classList.remove('visible');
+  document.querySelectorAll('.step-pill').forEach(s=>s.classList.remove('done'));
   document.getElementById('fecha').value=new Date().toISOString().split('T')[0];
-  PARTIDAS.forEach((_,pi)=>{
-    selMap[pi]=new Set();
-    CATS.forEach((_,ci)=>{ const b=document.getElementById('btn-'+pi+'-'+ci); if(b)b.classList.remove('sel'); });
-    const badge=document.getElementById('badge-'+pi); if(badge)badge.classList.remove('visible');
-    const p=document.getElementById('p-'+pi); if(p)p.classList.remove('open');
-  });
 }
 
 async function fetchRegistros(){
@@ -268,36 +528,40 @@ async function fetchRegistros(){
   if(rows.length <= 1) return [];
   const grouped = {};
   rows.slice(1).forEach(r=>{
-    const [fecha,unidad,partida,cats,,ts] = r;
-    if(!unidad) return;
-    const key = ts || (fecha+'_'+unidad);
-    if(!grouped[key]) grouped[key] = {fecha, unidad, partidas:{}, ts: ts||key};
-    grouped[key].partidas[partida] = String(cats).split(', ');
+    const [fecha, partida, frentes, unidades, , ts] = r;
+    if(!partida) return;
+    const key = String(ts||fecha+'_'+partida);
+    if(!grouped[key]) grouped[key]={fecha, partida, frentes: String(frentes).split(', '), unidades: String(unidades).split(', '), ts: key};
   });
   return Object.values(grouped).sort((a,b)=>String(b.ts).localeCompare(String(a.ts)));
 }
 
 async function cargarHistorial(){
   const el = document.getElementById('historial-list');
-  el.innerHTML = '<div class="loading"><div class="spinner"></div><br>Cargando registros...</div>';
+  el.innerHTML='<div class="loading"><div class="spinner"></div><br>Cargando registros...</div>';
   try {
-    registros = await fetchRegistros();
-    if(!registros.length){ el.innerHTML='<div class="empty-msg">Sin registros aún.<br>Empieza registrando el avance de hoy.</div>'; return; }
-    el.innerHTML = registros.map(r=>{
-      const rows = Object.entries(r.partidas).map(([p,cats])=>`
-        <div class="reg-partida">
-          <div class="reg-partida-name">${p}</div>
-          <div class="tags">${cats.map(c=>`<span class="tag">${c}</span>`).join('')}</div>
-        </div>`).join('');
-      return `<div class="reg-card">
+    const regs = await fetchRegistros();
+    if(!regs.length){ el.innerHTML='<div class="empty-msg">Sin registros aún.<br>Empieza registrando el avance de hoy.</div>'; return; }
+    el.innerHTML = regs.map(r=>`
+      <div class="reg-card">
         <div class="reg-header">
-          <div class="reg-unit">${r.unidad}</div>
-          <div class="reg-fecha">${r.fecha}</div>
-          <button class="reg-del" onclick="borrar('${r.ts}')" title="Borrar">×</button>
-        </div>${rows}</div>`;
-    }).join('');
+          <div>
+            <div class="reg-partida-title">${r.partida}</div>
+            <div class="reg-meta"><span class="reg-fecha">${r.fecha}</span></div>
+          </div>
+          <button class="reg-del" onclick="borrar('${r.ts}')">Borrar</button>
+        </div>
+        <div class="reg-section">
+          <div class="reg-section-label">Frentes</div>
+          <div class="tags">${r.frentes.map(f=>`<span class="tag tag-frente">${f}</span>`).join('')}</div>
+        </div>
+        <div class="reg-section">
+          <div class="reg-section-label">${r.unidades.length} Unidades</div>
+          <div class="tags">${r.unidades.map(u=>`<span class="tag tag-unit">${u}</span>`).join('')}</div>
+        </div>
+      </div>`).join('');
   } catch(e){
-    el.innerHTML='<div class="empty-msg">Error al cargar. Verifica tu conexión.</div>';
+    el.innerHTML='<div class="empty-msg">Error al cargar.<br>Verifica tu conexión.</div>';
   }
 }
 
@@ -311,26 +575,26 @@ async function borrar(ts){
     await fetch(SHEETS_URL, {method:'POST', mode:'no-cors', body: form});
     toast('Registro borrado','ok');
     await cargarHistorial();
-    await cargarDashboard();
-  } catch(e){
-    toast('Error al borrar','err');
-  }
+  } catch(e){ toast('Error al borrar','err'); }
 }
 
 async function cargarDashboard(){
   const cardsEl = document.getElementById('dash-cards');
   const unitsEl = document.getElementById('dash-units');
-  cardsEl.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+  cardsEl.innerHTML='<div class="loading"><div class="spinner"></div></div>';
   try {
-    registros = await fetchRegistros();
-    const TOTAL = 43; const TC = CATS.length;
+    const regs = await fetchRegistros();
+    const TOTAL=43; const TC=CATS.length;
     cardsEl.innerHTML = PARTIDAS.map(p=>{
-      const comp = ALL_UNITS.filter(u=>registros.some(r=>r.unidad===u&&r.partidas[p]&&r.partidas[p].length===TC)).length;
+      const comp = ALL_UNITS.filter(u=>{
+        const frentesUnit = new Set(regs.filter(r=>r.partida===p&&r.unidades.includes(u)).flatMap(r=>r.frentes));
+        return frentesUnit.size === TC;
+      }).length;
       const pct = Math.round(comp/TOTAL*100);
       return `<div class="dash-card">
         <div class="dash-label">${p}</div>
         <div class="dash-val">${pct}%</div>
-        <div class="dash-sub">${comp} de ${TOTAL} unid.</div>
+        <div class="dash-sub">${comp} / ${TOTAL} unid.</div>
         <div class="progress-wrap"><div class="progress-bar" style="width:${pct}%"></div></div>
       </div>`;
     }).join('');
@@ -339,7 +603,7 @@ async function cargarDashboard(){
       <div class="bloque-title">${b.label}</div>
       ${b.units.map(u=>{
         const rows = PARTIDAS.map(p=>{
-          const done = new Set(registros.filter(r=>r.unidad===u&&r.partidas[p]).flatMap(r=>r.partidas[p]));
+          const done = new Set(regs.filter(r=>r.partida===p&&r.unidades.includes(u)).flatMap(r=>r.frentes));
           const pct = Math.round(done.size/TC*100);
           return `<div class="unit-row">
             <div class="unit-row-label">${p.replace('Inst. ','I.')}</div>
