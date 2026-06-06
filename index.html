@@ -8,149 +8,130 @@
 <title>Avance de Obra</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <style>
-:root {
-  --azul: #1A6BF0;
-  --azul-dark: #005A96;
-  --azul-light: rgba(26,107,240,0.08);
-  --azul-border: rgba(26,107,240,0.25);
-  --dorado: #F5A800;
-  --dorado-light: rgba(245,168,0,0.1);
-  --bg: #F7F9FC;
-  --surface: #FFFFFF;
-  --surface2: #EEF3FA;
-  --text: #0D1E35;
-  --text2: #5A7090;
-  --text3: #9BADC4;
-  --border: rgba(0,0,0,0.06);
-  --border2: rgba(0,0,0,0.1);
-  --radius: 16px;
-  --radius-sm: 10px;
-  --radius-xs: 8px;
-  --font: 'DM Sans', sans-serif;
-  --mono: 'DM Mono', monospace;
-  --shadow: 0 4px 24px rgba(0,0,0,0.08);
+:root{
+  --azul:#1A6BF0;--azul-dark:#005A96;--azul-light:rgba(26,107,240,0.08);--azul-border:rgba(26,107,240,0.25);
+  --dorado:#F5A800;--dorado-light:rgba(245,168,0,0.10);
+  --bg:#F7F9FC;--surface:#FFFFFF;--surface2:#EEF3FA;
+  --text:#0D1E35;--text2:#5A7090;--text3:#9BADC4;
+  --border:rgba(0,0,0,0.06);--border2:rgba(0,0,0,0.10);
+  --red:#E24B4A;--red-light:#FCEBEB;--red-text:#791F1F;
+  --green:#1D9E75;--green-light:#E1F5EE;--green-text:#085041;
+  --amber:#EF9F27;--amber-light:#FAEEDA;--amber-text:#633806;
+  --radius:16px;--radius-sm:10px;--radius-xs:8px;
+  --font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;
+  --shadow:0 4px 24px rgba(0,0,0,0.08);
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --azul-light: rgba(26,107,240,0.12);
-    --azul-border: rgba(26,107,240,0.3);
-    --dorado-light: rgba(245,168,0,0.12);
-    --bg: #060E1C;
-    --surface: #0D1E35;
-    --surface2: #132540;
-    --text: #EEF2FF;
-    --text2: #6B82A8;
-    --text3: #3D5070;
-    --border: rgba(255,255,255,0.06);
-    --border2: rgba(255,255,255,0.1);
-    --shadow: 0 4px 24px rgba(0,0,0,0.4);
-  }
-}
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }
-
-.nav { position: sticky; top: 0; z-index: 100; background: #005A96; border-bottom: 4px solid #F5A800; }
-.nav-top { padding: 14px 20px 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.nav-brand { display: flex; flex-direction: column; }
-.nav-project { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.65); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
-.nav-title { font-size: 15px; font-weight: 600; color: #fff; }
-.nav-date-badge { font-family: var(--mono); font-size: 11px; color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; padding: 5px 9px; flex-shrink: 0; white-space: nowrap; }
-.nav-tabs { display: flex; padding: 0 12px; margin-top: 10px; gap: 4px; }
-.nav-tab { flex: 1; padding: 9px 0; text-align: center; color: rgba(255,255,255,0.55); font-size: 13px; font-weight: 500; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; }
-.nav-tab.active { color: #fff; border-bottom-color: #fff; }
-
-.page { display: none; padding: 16px; }
-.page.active { display: block; animation: fadeUp 0.2s ease; }
-@keyframes fadeUp { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
-
-.field-label { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
-input[type=date] { width: 100%; font-size: 15px; font-family: var(--mono); padding: 12px 14px; border: 1px solid var(--border2); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); appearance: none; -webkit-appearance: none; margin-bottom: 16px; }
-
-.section-card { background: var(--surface); border: 1px solid var(--border2); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; }
-.section-card.active-card { border-color: var(--azul-border); }
-
-/* PARTIDA */
-.partida-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.partida-btn { padding: 14px 10px; border: 1px solid var(--border2); border-radius: var(--radius-sm); background: var(--surface2); color: var(--text2); font-size: 13px; font-weight: 600; font-family: var(--font); text-align: center; cursor: pointer; transition: all 0.15s; position: relative; overflow: hidden; }
-.partida-btn::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, #1A6BF0, #0D5FE0); opacity: 0; transition: opacity 0.15s; }
-.partida-btn span { position: relative; z-index: 1; }
-.partida-btn.active { border-color: var(--azul); color: #fff; }
-.partida-btn.active::before { opacity: 1; }
-
-/* FRENTES TABS */
-.frentes-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; margin-bottom: 14px; scrollbar-width: none; }
-.frentes-tabs::-webkit-scrollbar { display: none; }
-.frente-tab { flex-shrink: 0; padding: 8px 14px; border: 1.5px solid var(--border2); border-radius: 20px; background: var(--surface2); color: var(--text2); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s; white-space: nowrap; position: relative; }
-.frente-tab.has-units { border-color: var(--dorado); color: var(--dorado); background: var(--dorado-light); }
-.frente-tab.current { border-color: var(--azul); color: var(--azul); background: var(--azul-light); }
-.frente-tab.has-units.current { border-color: var(--azul); color: var(--azul); background: var(--azul-light); }
-.frente-count { display: inline-block; background: var(--dorado); color: #fff; font-size: 10px; font-weight: 700; border-radius: 10px; padding: 1px 5px; margin-left: 4px; }
-.frente-tab.current .frente-count { background: var(--azul); }
-
-/* UNIDADES */
-.bloque-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; margin-top: 12px; }
-.bloque-label { font-size: 11px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; }
-.sel-all-btn { font-size: 11px; font-weight: 600; padding: 4px 10px; border: 1px solid var(--azul-border); border-radius: 20px; background: none; color: var(--azul); cursor: pointer; font-family: var(--font); }
-.unit-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
-.unit-btn { padding: 11px 4px; border: 1px solid var(--border2); border-radius: var(--radius-xs); background: var(--surface2); color: var(--text2); font-size: 12px; font-weight: 600; font-family: var(--mono); text-align: center; cursor: pointer; transition: all 0.12s; }
-.unit-btn.sel { border-color: var(--azul-border); background: var(--azul-light); color: var(--azul); }
-
-/* RESUMEN FRENTES */
-.resumen-frentes { background: var(--surface2); border: 1px solid var(--border2); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 12px; display: none; }
-.resumen-frentes.visible { display: block; }
-.resumen-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px; font-size: 12px; }
-.resumen-row:last-child { margin-bottom: 0; }
-.resumen-frente-name { font-weight: 700; color: var(--dorado); min-width: 70px; flex-shrink: 0; }
-.resumen-units { color: var(--text2); font-family: var(--mono); font-size: 11px; line-height: 1.5; }
-
-.save-btn { width: 100%; padding: 16px; font-size: 15px; font-weight: 700; font-family: var(--font); border: none; border-radius: var(--radius-sm); background: linear-gradient(135deg, #1A6BF0, #0D5FE0); color: #fff; cursor: pointer; box-shadow: 0 4px 20px rgba(26,107,240,0.3); transition: all 0.2s; display: none; }
-.save-btn:active { transform: scale(0.98); }
-.save-btn:disabled { background: var(--surface2); box-shadow: none; color: var(--text3); }
-
-.loading { text-align: center; padding: 3rem 1rem; color: var(--text2); }
-.spinner { display: inline-block; width: 22px; height: 22px; border: 2px solid var(--border2); border-top-color: var(--azul); border-radius: 50%; animation: spin 0.7s linear infinite; margin-bottom: 10px; }
-@keyframes spin { to { transform: rotate(360deg); } }
-
-.toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--surface2); color: var(--text); border: 1px solid var(--border2); padding: 12px 20px; border-radius: 30px; font-size: 13px; font-weight: 500; z-index: 999; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; max-width: 90vw; text-align: center; box-shadow: var(--shadow); }
-.toast.show { transform: translateX(-50%) translateY(0); }
-.toast.ok { background: #005A96; color: #fff; border-color: #005A96; }
-.toast.err { background: rgba(200,40,40,0.95); color: #fff; border-color: transparent; }
+@media(prefers-color-scheme:dark){:root{
+  --azul-light:rgba(26,107,240,0.12);--azul-border:rgba(26,107,240,0.3);
+  --dorado-light:rgba(245,168,0,0.12);
+  --bg:#060E1C;--surface:#0D1E35;--surface2:#132540;
+  --text:#EEF2FF;--text2:#6B82A8;--text3:#3D5070;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.10);
+  --red-light:rgba(226,75,74,0.15);--red-text:#F09595;
+  --green-light:rgba(29,158,117,0.12);--green-text:#5DCAA5;
+  --amber-light:rgba(239,159,39,0.12);--amber-text:#FAC775;
+  --shadow:0 4px 24px rgba(0,0,0,0.4);
+}}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh}
+.nav{position:sticky;top:0;z-index:100;background:#005A96;border-bottom:4px solid #F5A800}
+.nav-top{padding:14px 20px 0;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.nav-brand{display:flex;flex-direction:column}
+.nav-project{font-size:11px;font-weight:500;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px}
+.nav-title{font-size:15px;font-weight:600;color:#fff}
+.nav-date-badge{font-family:var(--mono);font-size:11px;color:rgba(255,255,255,0.75);background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:6px;padding:5px 9px;flex-shrink:0;white-space:nowrap}
+.nav-tabs{display:flex;padding:0 12px;margin-top:10px;gap:4px}
+.nav-tab{flex:1;padding:9px 0;text-align:center;color:rgba(255,255,255,0.55);font-size:13px;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
+.nav-tab.active{color:#fff;border-bottom-color:#fff}
+.page{display:none;padding:16px;position:relative}
+.page.active{display:block;animation:fadeUp .2s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.field-label{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+input[type=date],select.filter-sel{width:100%;font-size:15px;font-family:var(--mono);padding:12px 14px;border:1px solid var(--border2);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);appearance:none;-webkit-appearance:none;margin-bottom:16px}
+.section-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+.section-card.active-card{border-color:var(--azul-border)}
+.partida-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.partida-btn{padding:14px 10px;border:1px solid var(--border2);border-radius:var(--radius-sm);background:var(--surface2);color:var(--text2);font-size:13px;font-weight:600;font-family:var(--font);text-align:center;cursor:pointer;transition:all .15s;position:relative;overflow:hidden}
+.partida-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#1A6BF0,#0D5FE0);opacity:0;transition:opacity .15s}
+.partida-btn span{position:relative;z-index:1}
+.partida-btn.active{border-color:var(--azul);color:#fff}
+.partida-btn.active::before{opacity:1}
+.frentes-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;margin-bottom:14px;scrollbar-width:none}
+.frentes-tabs::-webkit-scrollbar{display:none}
+.frente-tab{flex-shrink:0;padding:8px 14px;border:1.5px solid var(--border2);border-radius:20px;background:var(--surface2);color:var(--text2);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap}
+.frente-tab.has-units{border-color:var(--dorado);color:var(--dorado);background:var(--dorado-light)}
+.frente-tab.current{border-color:var(--azul);color:var(--azul);background:var(--azul-light)}
+.frente-count{display:inline-block;background:var(--dorado);color:#fff;font-size:10px;font-weight:700;border-radius:10px;padding:1px 5px;margin-left:4px}
+.frente-tab.current .frente-count{background:var(--azul)}
+.bloque-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;margin-top:12px}
+.bloque-label{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.08em}
+.sel-all-btn{font-size:11px;font-weight:600;padding:4px 10px;border:1px solid var(--azul-border);border-radius:20px;background:none;color:var(--azul);cursor:pointer;font-family:var(--font)}
+.unit-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.unit-btn{padding:11px 4px;border:1px solid var(--border2);border-radius:var(--radius-xs);background:var(--surface2);color:var(--text2);font-size:12px;font-weight:600;font-family:var(--mono);text-align:center;cursor:pointer;transition:all .12s}
+.unit-btn.sel{border-color:var(--azul-border);background:var(--azul-light);color:var(--azul)}
+.unit-btn.locked{border:1px dashed var(--border2);background:var(--surface2);color:var(--text3);cursor:not-allowed;opacity:0.6;font-size:11px;padding:6px 4px;line-height:1.3}
+.unit-btn.locked i{display:block;font-size:13px;margin-bottom:1px}
+.resumen-frentes{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:12px 14px;margin-bottom:12px;display:none}
+.resumen-frentes.visible{display:block}
+.resumen-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;font-size:12px}
+.resumen-row:last-child{margin-bottom:0}
+.resumen-frente-name{font-weight:700;color:var(--dorado);min-width:70px;flex-shrink:0}
+.resumen-units{color:var(--text2);font-family:var(--mono);font-size:11px;line-height:1.5}
+.save-btn{width:100%;padding:16px;font-size:15px;font-weight:700;font-family:var(--font);border:none;border-radius:var(--radius-sm);background:linear-gradient(135deg,#1A6BF0,#0D5FE0);color:#fff;cursor:pointer;box-shadow:0 4px 20px rgba(26,107,240,0.3);transition:all .2s;display:none}
+.save-btn:active{transform:scale(.98)}
+.save-btn:disabled{background:var(--surface2);box-shadow:none;color:var(--text3)}
+.loading{text-align:center;padding:3rem 1rem;color:var(--text2)}
+.spinner{display:inline-block;width:22px;height:22px;border:2px solid var(--border2);border-top-color:var(--azul);border-radius:50%;animation:spin .7s linear infinite;margin-bottom:10px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--surface2);color:var(--text);border:1px solid var(--border2);padding:12px 20px;border-radius:30px;font-size:13px;font-weight:500;z-index:999;transition:transform .3s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;max-width:90vw;text-align:center;box-shadow:var(--shadow)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.ok{background:#005A96;color:#fff;border-color:#005A96}
+.toast.err{background:rgba(200,40,40,0.95);color:#fff;border-color:transparent}
 
 /* HISTORIAL */
-.reg-card { background: var(--surface); border: 1px solid var(--border2); border-radius: var(--radius); padding: 16px; margin-bottom: 10px; }
-.reg-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; gap: 10px; }
-.reg-partida-title { font-size: 17px; font-weight: 700; color: var(--text); }
-.reg-fecha { font-size: 11px; font-family: var(--mono); color: var(--text2); margin-top: 3px; }
-.reg-del { border: 1px solid rgba(200,40,40,0.25); background: rgba(200,40,40,0.08); color: #E05555; font-size: 13px; cursor: pointer; padding: 5px 12px; border-radius: var(--radius-xs); flex-shrink: 0; font-family: var(--font); font-weight: 600; }
-.reg-frente-row { margin-bottom: 10px; }
-.reg-frente-name { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 5px; }
-.tags { display: flex; flex-wrap: wrap; gap: 5px; }
-.tag { font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: 500; font-family: var(--mono); }
-.tag-unit { background: var(--azul-light); color: var(--azul); border: 1px solid var(--azul-border); }
-.empty-msg { text-align: center; padding: 4rem 1rem; color: var(--text2); font-size: 15px; line-height: 1.8; }
+.hist-filters{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.hist-filters select,.hist-filters input{width:100%;font-size:13px;font-family:var(--mono);padding:10px 12px;border:1px solid var(--border2);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);appearance:none;-webkit-appearance:none;margin-bottom:0}
+.reg-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);padding:16px;margin-bottom:10px}
+.reg-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:10px}
+.reg-partida-title{font-size:17px;font-weight:700;color:var(--text)}
+.reg-fecha{font-size:11px;font-family:var(--mono);color:var(--text2);margin-top:3px}
+.reg-del{border:1px solid rgba(200,40,40,0.25);background:rgba(200,40,40,0.08);color:#E05555;font-size:13px;cursor:pointer;padding:5px 12px;border-radius:var(--radius-xs);flex-shrink:0;font-family:var(--font);font-weight:600}
+.reg-frente-row{margin-bottom:10px}
+.reg-frente-name{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:500;font-family:var(--mono)}
+.tag-unit{background:var(--azul-light);color:var(--azul);border:1px solid var(--azul-border)}
+.empty-msg{text-align:center;padding:4rem 1rem;color:var(--text2);font-size:15px;line-height:1.8}
 
 /* DASHBOARD */
-.dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-.dash-card { background: var(--surface); border: 1px solid var(--border2); border-radius: var(--radius-sm); padding: 16px; position: relative; overflow: hidden; }
-.dash-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, #1A6BF0, #F5A800); }
-.dash-label { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; line-height: 1.4; }
-.dash-val { font-size: 28px; font-weight: 700; color: var(--text); font-family: var(--mono); }
-.dash-sub { font-size: 11px; color: var(--text2); margin-top: 3px; font-family: var(--mono); }
-.progress-wrap { background: var(--surface2); border-radius: 4px; height: 4px; margin-top: 10px; }
-.progress-bar { height: 4px; border-radius: 4px; background: linear-gradient(90deg, #1A6BF0, #5A9EFF); }
-.bloque-title { font-size: 11px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin: 20px 0 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
-.unit-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 8px; }
-.unit-name { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 10px; font-family: var(--mono); }
-.unit-row { display: flex; align-items: center; margin-bottom: 6px; gap: 8px; }
-.unit-row-label { font-size: 11px; color: var(--text2); width: 85px; flex-shrink: 0; font-weight: 500; }
-.mini-bar-bg { flex: 1; background: var(--surface2); border-radius: 3px; height: 4px; }
-.mini-bar-fill { height: 4px; border-radius: 3px; background: linear-gradient(90deg, #1A6BF0, #5A9EFF); }
-.unit-pct { font-size: 11px; font-weight: 600; color: var(--text2); width: 30px; text-align: right; font-family: var(--mono); }
+.dash-section-title{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin:0 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.concreto-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);padding:16px;margin-bottom:20px}
+.frente-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.frente-name{font-size:13px;font-weight:600;color:var(--text);width:76px;flex-shrink:0}
+.bar-bg{flex:1;background:var(--surface2);border-radius:4px;height:10px}
+.bar-fill{height:10px;border-radius:4px;background:linear-gradient(90deg,#1A6BF0,#5A9EFF)}
+.frente-stats{display:flex;gap:6px;flex-shrink:0;font-size:12px;font-family:var(--mono)}
+.stat-lotes{color:var(--text);font-weight:600;min-width:44px;text-align:right}
+.stat-pct{color:var(--text2);min-width:36px}
+.semana-filters{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.semana-filters select{width:100%;font-size:13px;font-family:var(--mono);padding:10px 12px;border:1px solid var(--border2);border-radius:var(--radius-sm);background:var(--surface);color:var(--text);appearance:none;-webkit-appearance:none}
+.semana-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:14px;margin-bottom:8px}
+.semana-partida-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.semana-partida-name{font-size:14px;font-weight:700;color:var(--text)}
+.badge{font-size:11px;padding:3px 9px;border-radius:20px;font-weight:600}
+.badge-ok{background:var(--green-light);color:var(--green-text)}
+.badge-warn{background:var(--amber-light);color:var(--amber-text)}
+.badge-late{background:var(--red-light);color:var(--red-text)}
+.frente-mini-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:12px}
+.frente-mini-name{color:var(--text2);width:72px;flex-shrink:0;font-weight:500}
+.mini-bar-bg{flex:1;background:var(--surface2);border-radius:3px;height:6px}
+.mini-bar-fill{height:6px;border-radius:3px}
+.mini-stat{color:var(--text2);font-family:var(--mono);font-size:11px;min-width:52px;text-align:right;flex-shrink:0}
 </style>
 </head>
 <body>
-
 <nav class="nav">
   <div class="nav-top">
     <div class="nav-brand">
@@ -168,200 +149,198 @@ input[type=date] { width: 100%; font-size: 15px; font-family: var(--mono); paddi
 
 <!-- REGISTRO -->
 <div id="page-registro" class="page active">
-
   <div class="field-label">Fecha de registro</div>
   <input type="date" id="fecha">
-
-  <!-- PASO 1: PARTIDA -->
   <div class="section-card" id="card-partida">
     <div class="field-label" style="margin-bottom:12px">① Selecciona la partida</div>
     <div class="partida-grid" id="partida-grid"></div>
   </div>
-
-  <!-- PASO 2: FRENTES + UNIDADES -->
   <div class="section-card" id="card-frentes" style="display:none">
     <div class="field-label" style="margin-bottom:10px">② Frente activo <span style="color:var(--text3);font-weight:400;text-transform:none;letter-spacing:0">— toca para cambiar</span></div>
     <div class="frentes-tabs" id="frentes-tabs"></div>
-
     <div class="field-label" style="margin-bottom:4px" id="unidades-label">③ Unidades</div>
     <div id="unidades-wrap"></div>
   </div>
-
-  <!-- RESUMEN -->
   <div class="resumen-frentes" id="resumen-frentes"></div>
-
   <button class="save-btn" id="save-btn" onclick="guardar()">Guardar registro</button>
   <div style="height:32px"></div>
 </div>
 
 <!-- HISTORIAL -->
 <div id="page-historial" class="page">
+  <div class="hist-filters">
+    <input type="date" id="hist-fecha" placeholder="Filtrar fecha" onchange="renderHistorial()">
+    <select id="hist-partida" onchange="renderHistorial()">
+      <option value="">Todas las partidas</option>
+      <option>Encofrado</option><option>Acero</option>
+      <option>Inst. Eléctricas</option><option>Inst. Sanitarias</option><option>Concreto</option>
+    </select>
+  </div>
   <div id="historial-list"></div>
 </div>
 
 <!-- DASHBOARD -->
 <div id="page-dashboard" class="page">
-  <div class="dash-grid" id="dash-cards"></div>
-  <div id="dash-units"></div>
+  <div class="dash-section-title">Concreto vaciado por frente</div>
+  <div class="concreto-card" id="concreto-card">
+    <div class="loading"><div class="spinner"></div></div>
+  </div>
+  <div class="dash-section-title">Corte semanal</div>
+  <div class="semana-filters">
+    <select id="sel-semana" onchange="renderSemana()"></select>
+    <select id="sel-partida-dash" onchange="renderSemana()">
+      <option value="">Todas las partidas</option>
+      <option>Encofrado</option><option>Acero</option>
+      <option>Inst. Eléctricas</option><option>Inst. Sanitarias</option><option>Concreto</option>
+    </select>
+  </div>
+  <div id="semana-list"></div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxEIraKjZeTntQgOywEyi-7qTyu_h34jkeVdDR_8igarhk0A6X4-3wDuD69QSCrNDpXrw/exec';
-const PARTIDAS = ['Encofrado','Acero','Inst. Eléctricas','Inst. Sanitarias','Concreto'];
-const CATS = ['Platea','Muro P1','Losa P1','Muro P2','Losa P2'];
-const UNITS_F = Array.from({length:13},(_,i)=>'F'+(i+1));
-const UNITS_E = Array.from({length:12},(_,i)=>'E'+(i+1));
-const UNITS_D = Array.from({length:18},(_,i)=>'D'+(i+3));
-const ALL_UNITS = [...UNITS_F,...UNITS_E,...UNITS_D];
-const BLOQUES = [{label:'Bloque F',units:UNITS_F},{label:'Bloque E',units:UNITS_E},{label:'Bloque D',units:UNITS_D}];
+const SHEETS_URL='https://script.google.com/macros/s/AKfycbxEIraKjZeTntQgOywEyi-7qTyu_h34jkeVdDR_8igarhk0A6X4-3wDuD69QSCrNDpXrw/exec';
+const PARTIDAS=['Encofrado','Acero','Inst. Eléctricas','Inst. Sanitarias','Concreto'];
+const CATS=['Platea','Muro P1','Losa P1','Muro P2','Losa P2'];
+const UNITS_F=Array.from({length:13},(_,i)=>'F'+(i+1));
+const UNITS_E=Array.from({length:12},(_,i)=>'E'+(i+1));
+const UNITS_D=Array.from({length:18},(_,i)=>'D'+(i+3));
+const ALL_UNITS=[...UNITS_F,...UNITS_E,...UNITS_D];
+const BLOQUES=[{label:'Bloque F',units:UNITS_F},{label:'Bloque E',units:UNITS_E},{label:'Bloque D',units:UNITS_D}];
+const META_SEMANAL=6;
 
-let selPartida = null;
-let currentFrente = 0; // índice del frente activo en el tab
-// frenteUnidades[i] = Set de unidades para el frente i
-let frenteUnidades = {};
+let selPartida=null,currentFrente=0,frenteUnidades={},allRegs=[];
 
 function initDate(){
-  const d = new Date();
-  document.getElementById('nav-date').textContent = d.toLocaleDateString('es-PE',{day:'2-digit',month:'short',year:'numeric'});
-  document.getElementById('fecha').value = d.toISOString().split('T')[0];
+  const d=new Date();
+  document.getElementById('nav-date').textContent=d.toLocaleDateString('es-PE',{day:'2-digit',month:'short',year:'numeric'});
+  document.getElementById('fecha').value=d.toISOString().split('T')[0];
 }
 
 function buildPartidas(){
-  const el = document.getElementById('partida-grid');
-  el.innerHTML = PARTIDAS.map((p,i)=>
+  document.getElementById('partida-grid').innerHTML=PARTIDAS.map((p,i)=>
     `<button class="partida-btn" id="pb-${i}" onclick="selectPartida(${i})"><span>${p}</span></button>`
   ).join('');
 }
 
+// Retorna Set de unidades ya registradas para partida+frente dados
+function getLockedUnits(partida,frente){
+  const locked=new Set();
+  allRegs.forEach(r=>{
+    if(r.partida===partida&&r.frentes[frente]){
+      r.frentes[frente].forEach(u=>locked.add(u));
+    }
+  });
+  return locked;
+}
+
 function selectPartida(i){
-  selPartida = i;
-  frenteUnidades = {};
-  CATS.forEach((_,j) => frenteUnidades[j] = new Set());
-  currentFrente = 0;
-  document.querySelectorAll('.partida-btn').forEach((b,j)=>b.classList.toggle('active', j===i));
+  selPartida=i;frenteUnidades={};
+  CATS.forEach((_,j)=>frenteUnidades[j]=new Set());
+  currentFrente=0;
+  document.querySelectorAll('.partida-btn').forEach((b,j)=>b.classList.toggle('active',j===i));
   document.getElementById('card-partida').classList.add('active-card');
   document.getElementById('card-frentes').style.display='block';
-  buildFrentesTabs();
-  buildUnidades();
-  updateResumen();
+  buildFrentesTabs();buildUnidades();updateResumen();
 }
 
 function buildFrentesTabs(){
-  const el = document.getElementById('frentes-tabs');
-  el.innerHTML = CATS.map((c,j)=>{
-    const count = frenteUnidades[j] ? frenteUnidades[j].size : 0;
-    const hasUnits = count > 0;
-    const isCurrent = j === currentFrente;
+  document.getElementById('frentes-tabs').innerHTML=CATS.map((c,j)=>{
+    const count=frenteUnidades[j]?frenteUnidades[j].size:0;
+    const hasUnits=count>0,isCurrent=j===currentFrente;
     return `<button class="frente-tab ${hasUnits?'has-units':''} ${isCurrent?'current':''}" onclick="switchFrente(${j})">
-      ${c}${hasUnits ? `<span class="frente-count">${count}</span>` : ''}
+      ${c}${hasUnits?`<span class="frente-count">${count}</span>`:''}
     </button>`;
   }).join('');
 }
 
 function switchFrente(j){
-  currentFrente = j;
-  buildFrentesTabs();
-  buildUnidades();
-  document.getElementById('unidades-label').textContent = `③ Unidades — ${CATS[j]}`;
+  currentFrente=j;buildFrentesTabs();buildUnidades();
+  document.getElementById('unidades-label').textContent=`③ Unidades — ${CATS[j]}`;
 }
 
 function buildUnidades(){
-  const wrap = document.getElementById('unidades-wrap');
-  const sel = frenteUnidades[currentFrente];
-  wrap.innerHTML = BLOQUES.map(b=>`
+  const sel=frenteUnidades[currentFrente];
+  const partida=selPartida!==null?PARTIDAS[selPartida]:'';
+  const frente=CATS[currentFrente];
+  const locked=partida?getLockedUnits(partida,frente):new Set();
+  document.getElementById('unidades-wrap').innerHTML=BLOQUES.map(b=>`
     <div class="bloque-header">
       <div class="bloque-label">${b.label}</div>
       <button class="sel-all-btn" onclick="selAll(${currentFrente},'${b.label}')">Sel. todos</button>
     </div>
     <div class="unit-grid">
-      ${b.units.map(u=>`<button class="unit-btn ${sel.has(u)?'sel':''}" id="ub-${u}" onclick="toggleUnit('${u}')">${u}</button>`).join('')}
+      ${b.units.map(u=>{
+        if(locked.has(u)){
+          return `<div class="unit-btn locked"><i class="ti ti-lock" aria-hidden="true"></i>${u}<br><span style="font-size:9px">Ya reg.</span></div>`;
+        }
+        return `<button class="unit-btn ${sel.has(u)?'sel':''}" id="ub-${u}" onclick="toggleUnit('${u}')">${u}</button>`;
+      }).join('')}
     </div>
   `).join('');
 }
 
 function toggleUnit(u){
-  const sel = frenteUnidades[currentFrente];
-  if(sel.has(u)) sel.delete(u); else sel.add(u);
-  const btn = document.getElementById('ub-'+u);
-  if(btn) btn.classList.toggle('sel', sel.has(u));
-  buildFrentesTabs();
-  updateResumen();
+  const partida=selPartida!==null?PARTIDAS[selPartida]:'';
+  const frente=CATS[currentFrente];
+  const locked=getLockedUnits(partida,frente);
+  if(locked.has(u))return;
+  const sel=frenteUnidades[currentFrente];
+  if(sel.has(u))sel.delete(u);else sel.add(u);
+  const btn=document.getElementById('ub-'+u);
+  if(btn)btn.classList.toggle('sel',sel.has(u));
+  buildFrentesTabs();updateResumen();
 }
 
-function selAll(fi, bloque){
-  const b = BLOQUES.find(x=>x.label===bloque);
-  if(!b) return;
-  const sel = frenteUnidades[fi];
-  const allSel = b.units.every(u=>sel.has(u));
-  b.units.forEach(u=>{ if(allSel) sel.delete(u); else sel.add(u); });
-  buildUnidades();
-  buildFrentesTabs();
-  updateResumen();
+function selAll(fi,bloque){
+  const b=BLOQUES.find(x=>x.label===bloque);if(!b)return;
+  const partida=selPartida!==null?PARTIDAS[selPartida]:'';
+  const frente=CATS[fi];
+  const locked=getLockedUnits(partida,frente);
+  const sel=frenteUnidades[fi];
+  const avail=b.units.filter(u=>!locked.has(u));
+  const allSel=avail.every(u=>sel.has(u));
+  avail.forEach(u=>{if(allSel)sel.delete(u);else sel.add(u);});
+  buildUnidades();buildFrentesTabs();updateResumen();
 }
 
 function updateResumen(){
-  const el = document.getElementById('resumen-frentes');
-  const rows = CATS.map((c,j)=>{
-    const units = [...frenteUnidades[j]].sort();
-    if(!units.length) return '';
-    return `<div class="resumen-row">
-      <div class="resumen-frente-name">${c}</div>
-      <div class="resumen-units">${units.join(', ')}</div>
-    </div>`;
+  const el=document.getElementById('resumen-frentes');
+  const rows=CATS.map((c,j)=>{
+    const units=[...frenteUnidades[j]].sort();
+    if(!units.length)return'';
+    return`<div class="resumen-row"><div class="resumen-frente-name">${c}</div><div class="resumen-units">${units.join(', ')}</div></div>`;
   }).filter(Boolean);
-
-  const totalUnidades = CATS.reduce((acc,_,j)=>acc+frenteUnidades[j].size,0);
-
-  if(rows.length > 0){
-    el.innerHTML = rows.join('');
-    el.classList.add('visible');
-    document.getElementById('save-btn').style.display='block';
-  } else {
-    el.classList.remove('visible');
-    document.getElementById('save-btn').style.display='none';
-  }
+  if(rows.length){el.innerHTML=rows.join('');el.classList.add('visible');document.getElementById('save-btn').style.display='block';}
+  else{el.classList.remove('visible');document.getElementById('save-btn').style.display='none';}
 }
 
 async function guardar(){
-  if(selPartida===null){ toast('Selecciona una partida','err'); return; }
-  const totalUnidades = CATS.reduce((acc,_,j)=>acc+frenteUnidades[j].size,0);
-  if(totalUnidades===0){ toast('Asigna unidades a al menos un frente','err'); return; }
-
-  const fecha = document.getElementById('fecha').value || new Date().toISOString().split('T')[0];
-  const ts = Date.now();
-  const partida = PARTIDAS[selPartida];
-
-  // construir objeto frentes: {Platea: [F1,F2], 'Muro P1': [D3,D4], ...}
-  const frentes = {};
-  CATS.forEach((c,j)=>{
-    if(frenteUnidades[j].size > 0){
-      frentes[c] = [...frenteUnidades[j]].sort();
-    }
-  });
-
-  const btn = document.getElementById('save-btn');
-  btn.disabled=true; btn.textContent='Guardando...';
-  toast('Guardando...','');
-  try {
-    const form = new FormData();
+  if(selPartida===null){toast('Selecciona una partida','err');return;}
+  const total=CATS.reduce((a,_,j)=>a+frenteUnidades[j].size,0);
+  if(total===0){toast('Asigna unidades a al menos un frente','err');return;}
+  const fecha=document.getElementById('fecha').value||new Date().toISOString().split('T')[0];
+  const ts=Date.now();
+  const partida=PARTIDAS[selPartida];
+  const frentes={};
+  CATS.forEach((c,j)=>{if(frenteUnidades[j].size>0)frentes[c]=[...frenteUnidades[j]].sort();});
+  const btn=document.getElementById('save-btn');
+  btn.disabled=true;btn.textContent='Guardando...';toast('Guardando...','');
+  try{
+    const form=new FormData();
     form.append('action','save');
-    form.append('data', JSON.stringify({fecha, partida, frentes, ts}));
-    await fetch(SHEETS_URL, {method:'POST', mode:'no-cors', body: form});
-    toast(`✓ ${partida} — ${totalUnidades} asignaciones guardadas`,'ok');
+    form.append('data',JSON.stringify({fecha,partida,frentes,ts}));
+    await fetch(SHEETS_URL,{method:'POST',mode:'no-cors',body:form});
+    toast(`✓ ${partida} — ${total} asignaciones guardadas`,'ok');
+    await recargarRegs();
     resetForm();
-  } catch(e){
-    toast('Error al guardar. Intenta de nuevo.','err');
-  }
-  btn.disabled=false; btn.textContent='Guardar registro';
+  }catch(e){toast('Error al guardar. Intenta de nuevo.','err');}
+  btn.disabled=false;btn.textContent='Guardar registro';
 }
 
 function resetForm(){
-  selPartida=null;
-  frenteUnidades={};
-  CATS.forEach((_,j)=>frenteUnidades[j]=new Set());
-  currentFrente=0;
+  selPartida=null;frenteUnidades={};CATS.forEach((_,j)=>frenteUnidades[j]=new Set());currentFrente=0;
   document.querySelectorAll('.partida-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('card-partida').classList.remove('active-card');
   document.getElementById('card-frentes').style.display='none';
@@ -371,117 +350,164 @@ function resetForm(){
 }
 
 async function fetchRegistros(){
-  const res = await fetch(SHEETS_URL+'?t='+Date.now());
-  const data = await res.json();
-  const rows = data.rows || [];
-  if(rows.length <= 1) return [];
-  const grouped = {};
+  const res=await fetch(SHEETS_URL+'?t='+Date.now());
+  const data=await res.json();
+  const rows=data.rows||[];
+  if(rows.length<=1)return[];
+  const grouped={};
   rows.slice(1).forEach(r=>{
-    const [fecha, partida, frentesStr, unidadesStr, , ts] = r;
-    if(!partida) return;
-    const key = String(ts||fecha+'_'+partida);
-    if(!grouped[key]){
-      grouped[key]={fecha, partida, frentes:{}, ts: key};
-    }
-    // cada fila en Sheets: frente=frentesStr, unidades=unidadesStr
-    if(frentesStr && unidadesStr){
-      grouped[key].frentes[String(frentesStr)] = String(unidadesStr).split(', ').filter(Boolean);
-    }
+    const[fecha,partida,frente,unidades,,ts]=r;
+    if(!partida)return;
+    const key=String(ts||fecha+'_'+partida);
+    if(!grouped[key])grouped[key]={fecha,partida,frentes:{},ts:key};
+    if(frente&&unidades)grouped[key].frentes[String(frente)]=String(unidades).split(', ').filter(Boolean);
   });
   return Object.values(grouped).sort((a,b)=>String(b.ts).localeCompare(String(a.ts)));
 }
 
+async function recargarRegs(){allRegs=await fetchRegistros();}
+
+function renderHistorial(){
+  const el=document.getElementById('historial-list');
+  const fechaFil=document.getElementById('hist-fecha').value;
+  const partFil=document.getElementById('hist-partida').value;
+  let regs=allRegs;
+  if(fechaFil)regs=regs.filter(r=>r.fecha===fechaFil);
+  if(partFil)regs=regs.filter(r=>r.partida===partFil);
+  if(!regs.length){el.innerHTML='<div class="empty-msg">Sin registros para este filtro.</div>';return;}
+  el.innerHTML=regs.map(r=>{
+    const frenteRows=Object.entries(r.frentes).map(([f,units])=>`
+      <div class="reg-frente-row">
+        <div class="reg-frente-name">${f}</div>
+        <div class="tags">${units.map(u=>`<span class="tag tag-unit">${u}</span>`).join('')}</div>
+      </div>`).join('');
+    return`<div class="reg-card">
+      <div class="reg-header">
+        <div><div class="reg-partida-title">${r.partida}</div><div class="reg-fecha">${r.fecha}</div></div>
+        <button class="reg-del" onclick="borrar('${r.ts}')">Borrar</button>
+      </div>${frenteRows}</div>`;
+  }).join('');
+}
+
 async function cargarHistorial(){
-  const el = document.getElementById('historial-list');
+  const el=document.getElementById('historial-list');
   el.innerHTML='<div class="loading"><div class="spinner"></div><br>Cargando registros...</div>';
-  try {
-    const regs = await fetchRegistros();
-    if(!regs.length){ el.innerHTML='<div class="empty-msg">Sin registros aún.<br>Empieza registrando el avance de hoy.</div>'; return; }
-    el.innerHTML = regs.map(r=>{
-      const frenteRows = Object.entries(r.frentes).map(([f,units])=>`
-        <div class="reg-frente-row">
-          <div class="reg-frente-name">${f}</div>
-          <div class="tags">${units.map(u=>`<span class="tag tag-unit">${u}</span>`).join('')}</div>
-        </div>`).join('');
-      return `<div class="reg-card">
-        <div class="reg-header">
-          <div>
-            <div class="reg-partida-title">${r.partida}</div>
-            <div class="reg-fecha">${r.fecha}</div>
-          </div>
-          <button class="reg-del" onclick="borrar('${r.ts}')">Borrar</button>
-        </div>
-        ${frenteRows}
-      </div>`;
-    }).join('');
-  } catch(e){
-    el.innerHTML='<div class="empty-msg">Error al cargar.<br>Verifica tu conexión.</div>';
-  }
+  try{await recargarRegs();renderHistorial();}
+  catch(e){el.innerHTML='<div class="empty-msg">Error al cargar. Verifica tu conexión.</div>';}
 }
 
 async function borrar(ts){
-  if(!confirm('¿Borrar este registro?')) return;
+  if(!confirm('¿Borrar este registro?'))return;
   toast('Borrando...','');
-  try {
-    const form = new FormData();
-    form.append('action','delete');
-    form.append('ts', ts);
-    await fetch(SHEETS_URL, {method:'POST', mode:'no-cors', body: form});
+  try{
+    const form=new FormData();form.append('action','delete');form.append('ts',ts);
+    await fetch(SHEETS_URL,{method:'POST',mode:'no-cors',body:form});
     toast('Registro borrado','ok');
-    await cargarHistorial();
-  } catch(e){ toast('Error al borrar','err'); }
+    await recargarRegs();renderHistorial();
+  }catch(e){toast('Error al borrar','err');}
+}
+
+// ---- DASHBOARD ----
+// Semanas: jueves a miércoles. Semana 23 = 04/06/2026 al 10/06/2026
+function getSemanas(){
+  const semanas=[];
+  // Ancla: semana 23 inicia el jueves 04/06/2026
+  const anclaFecha=new Date(2026,5,4); // mes 0-indexed
+  const anclaSem=23;
+  for(let delta=-10;delta<=10;delta++){
+    const ini=new Date(anclaFecha);ini.setDate(ini.getDate()+delta*7);
+    const fin=new Date(ini);fin.setDate(fin.getDate()+6);
+    const num=anclaSem+delta;
+    const label=`Sem ${num} — ${fmtDate(ini)} al ${fmtDate(fin)}`;
+    semanas.push({num,ini,fin,label});
+  }
+  return semanas;
+}
+
+function fmtDate(d){return d.toLocaleDateString('es-PE',{day:'2-digit',month:'short'});}
+function fmtDateISO(d){return d.toISOString().split('T')[0];}
+
+function buildSemanaSelector(){
+  const sel=document.getElementById('sel-semana');
+  const semanas=getSemanas();
+  const hoy=new Date();
+  sel.innerHTML=semanas.map(s=>{
+    const selected=hoy>=s.ini&&hoy<=s.fin?'selected':'';
+    return`<option value="${s.num}" ${selected}>${s.label}</option>`;
+  }).join('');
+}
+
+function renderConcreto(){
+  const el=document.getElementById('concreto-card');
+  const TOTAL=43;
+  const regsConcreto=allRegs.filter(r=>r.partida==='Concreto');
+  el.innerHTML=CATS.map(c=>{
+    const done=new Set(regsConcreto.flatMap(r=>r.frentes[c]||[]));
+    const n=done.size,pct=Math.round(n/TOTAL*100);
+    return`<div class="frente-row">
+      <div class="frente-name">${c}</div>
+      <div class="bar-bg"><div class="bar-fill" style="width:${pct}%"></div></div>
+      <div class="frente-stats">
+        <div class="stat-lotes">${n} lotes</div>
+        <div class="stat-pct">${pct}%</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderSemana(){
+  const el=document.getElementById('semana-list');
+  const numSel=parseInt(document.getElementById('sel-semana').value);
+  const partFil=document.getElementById('sel-partida-dash').value;
+  const semanas=getSemanas();
+  const sem=semanas.find(s=>s.num===numSel);if(!sem)return;
+  const iniISO=fmtDateISO(sem.ini),finISO=fmtDateISO(sem.fin);
+  const regsS=allRegs.filter(r=>r.fecha>=iniISO&&r.fecha<=finISO);
+  const partidas=partFil?[partFil]:PARTIDAS;
+  el.innerHTML=partidas.map(p=>{
+    const regsP=regsS.filter(r=>r.partida===p);
+    const frentesConDatos=CATS.filter(c=>regsP.some(r=>r.frentes[c]&&r.frentes[c].length>0));
+    if(!frentesConDatos.length)return`<div class="semana-card"><div class="semana-partida-hdr"><div class="semana-partida-name">${p}</div><span class="badge badge-late">Sin actividad</span></div></div>`;
+    const totalLotes=frentesConDatos.reduce((a,c)=>{
+      const done=new Set(regsP.flatMap(r=>r.frentes[c]||[]));return a+done.size;},0);
+    const metaTotal=frentesConDatos.length*META_SEMANAL;
+    const pctGlobal=metaTotal>0?totalLotes/metaTotal:0;
+    const badgeClass=pctGlobal>=1?'badge-ok':pctGlobal>=0.5?'badge-warn':'badge-late';
+    const badgeLabel=pctGlobal>=1?'Al día':pctGlobal>=0.5?'En riesgo':'Atrasado';
+    const rows=frentesConDatos.map(c=>{
+      const done=new Set(regsP.flatMap(r=>r.frentes[c]||[]));
+      const n=done.size,pct=Math.min(100,Math.round(n/META_SEMANAL*100));
+      const color=pct>=100?'#1D9E75':pct>=50?'#EF9F27':'#E24B4A';
+      return`<div class="frente-mini-row">
+        <div class="frente-mini-name">${c}</div>
+        <div class="mini-bar-bg"><div class="mini-bar-fill" style="width:${pct}%;background:${color}"></div></div>
+        <div class="mini-stat">${n} / ${META_SEMANAL} lotes</div>
+      </div>`;
+    }).join('');
+    return`<div class="semana-card">
+      <div class="semana-partida-hdr">
+        <div class="semana-partida-name">${p}</div>
+        <span class="badge ${badgeClass}">${badgeLabel}</span>
+      </div>${rows}</div>`;
+  }).join('');
 }
 
 async function cargarDashboard(){
-  const cardsEl = document.getElementById('dash-cards');
-  const unitsEl = document.getElementById('dash-units');
-  cardsEl.innerHTML='<div class="loading"><div class="spinner"></div></div>';
-  try {
-    const regs = await fetchRegistros();
-    const TOTAL=43; const TC=CATS.length;
-    cardsEl.innerHTML = PARTIDAS.map(p=>{
-      const comp = ALL_UNITS.filter(u=>{
-        const frentesUnit = new Set(
-          regs.filter(r=>r.partida===p)
-              .flatMap(r=>Object.entries(r.frentes).filter(([f,us])=>us.includes(u)).map(([f])=>f))
-        );
-        return frentesUnit.size === TC;
-      }).length;
-      const pct = Math.round(comp/TOTAL*100);
-      return `<div class="dash-card">
-        <div class="dash-label">${p}</div>
-        <div class="dash-val">${pct}%</div>
-        <div class="dash-sub">${comp} / ${TOTAL} unid.</div>
-        <div class="progress-wrap"><div class="progress-bar" style="width:${pct}%"></div></div>
-      </div>`;
-    }).join('');
-
-    unitsEl.innerHTML = BLOQUES.map(b=>`
-      <div class="bloque-title">${b.label}</div>
-      ${b.units.map(u=>{
-        const rows = PARTIDAS.map(p=>{
-          const done = new Set(
-            regs.filter(r=>r.partida===p)
-                .flatMap(r=>Object.entries(r.frentes).filter(([f,us])=>us.includes(u)).map(([f])=>f))
-          );
-          const pct = Math.round(done.size/TC*100);
-          return `<div class="unit-row">
-            <div class="unit-row-label">${p.replace('Inst. ','I.')}</div>
-            <div class="mini-bar-bg"><div class="mini-bar-fill" style="width:${pct}%"></div></div>
-            <div class="unit-pct">${pct}%</div>
-          </div>`;
-        }).join('');
-        return `<div class="unit-card"><div class="unit-name">${u}</div>${rows}</div>`;
-      }).join('')}
-    `).join('');
-  } catch(e){
-    cardsEl.innerHTML='<div class="empty-msg">Error al cargar dashboard.</div>';
+  document.getElementById('concreto-card').innerHTML='<div class="loading"><div class="spinner"></div></div>';
+  document.getElementById('semana-list').innerHTML='<div class="loading"><div class="spinner"></div></div>';
+  try{
+    await recargarRegs();
+    buildSemanaSelector();
+    renderConcreto();
+    renderSemana();
+  }catch(e){
+    document.getElementById('concreto-card').innerHTML='<div class="empty-msg">Error al cargar.</div>';
   }
 }
 
 function toast(msg,type=''){
   const t=document.getElementById('toast');
-  t.textContent=msg; t.className='toast '+(type||''); t.classList.add('show');
+  t.textContent=msg;t.className='toast '+(type||'');t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),2800);
 }
 
@@ -489,12 +515,12 @@ function goTab(id){
   document.querySelectorAll('.nav-tab').forEach((t,i)=>t.classList.toggle('active',['registro','historial','dashboard'][i]===id));
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
-  if(id==='historial') cargarHistorial();
-  if(id==='dashboard') cargarDashboard();
+  if(id==='historial')cargarHistorial();
+  if(id==='dashboard')cargarDashboard();
 }
 
-initDate();
-buildPartidas();
+initDate();buildPartidas();
+recargarRegs();
 </script>
 </body>
 </html>
