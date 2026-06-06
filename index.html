@@ -273,7 +273,7 @@ function buildUnidades(){
     <div class="unit-grid">
       ${b.units.map(u=>{
         if(locked.has(u)){
-          return `<div class="unit-btn locked"><i class="ti ti-lock" aria-hidden="true"></i>${u}<br><span style="font-size:9px">Ya reg.</span></div>`;
+          return `<div class="unit-btn locked"><i class="ti ti-lock" aria-hidden="true"></i>${u}</div>`;
         }
         return `<button class="unit-btn ${sel.has(u)?'sel':''}" id="ub-${u}" onclick="toggleUnit('${u}')">${u}</button>`;
       }).join('')}
