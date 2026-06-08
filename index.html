@@ -356,8 +356,9 @@ async function fetchRegistros(){
   if(rows.length<=1)return[];
   const grouped={};
   rows.slice(1).forEach(r=>{
-    const[fecha,partida,frente,unidades,,ts]=r;
+    const[fechaRaw,partida,frente,unidades,,ts]=r;
     if(!partida)return;
+    const fecha=String(fechaRaw).trim().substring(0,10);
     const key=String(ts||fecha+'_'+partida);
     if(!grouped[key])grouped[key]={fecha,partida,frentes:{},ts:key};
     if(frente&&unidades)grouped[key].frentes[String(frente)]=String(unidades).split(', ').filter(Boolean);
