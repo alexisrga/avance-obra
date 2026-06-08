@@ -369,12 +369,16 @@ async function recargarRegs(){allRegs=await fetchRegistros();}
 
 function renderHistorial(){
   const el=document.getElementById('historial-list');
-  const fechaFil=document.getElementById('hist-fecha').value;
-  const partFil=document.getElementById('hist-partida').value;
-  let regs=allRegs;
-  if(fechaFil)regs=regs.filter(r=>r.fecha===fechaFil);
-  if(partFil)regs=regs.filter(r=>r.partida===partFil);
-  if(!regs.length){el.innerHTML='<div class="empty-msg">Sin registros para este filtro.</div>';return;}
+  const fechaFil=(document.getElementById('hist-fecha').value||'').trim();
+  const partFil=(document.getElementById('hist-partida').value||'').trim();
+  let regs=[...allRegs];
+  if(fechaFil) regs=regs.filter(r=>String(r.fecha).trim()===fechaFil);
+  if(partFil) regs=regs.filter(r=>String(r.partida).trim()===partFil);
+  if(!regs.length){
+    const total=allRegs.length;
+    el.innerHTML=`<div class="empty-msg">Sin registros para este filtro.<br><small style="font-size:12px;color:var(--text3)">${total} registros en total</small></div>`;
+    return;
+  }
   el.innerHTML=regs.map(r=>{
     const frenteRows=Object.entries(r.frentes).map(([f,units])=>`
       <div class="reg-frente-row">
